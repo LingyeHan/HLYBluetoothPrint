@@ -11,8 +11,10 @@
 
 @interface HLYBluetoothDevice : NSObject
 
-@property (nonatomic, readonly) NSNumber *RSSI;
-@property (nonatomic, readonly) CBPeripheral *peripheral;
+@property (nonatomic, copy) NSNumber *RSSI;
+@property (nonatomic, copy) CBPeripheral *peripheral;
+@property (nonatomic, copy) NSString *serviceID;
+@property (nonatomic, copy) NSString *characteristicID;
 
 - (instancetype)initWithPeripheral:(CBPeripheral *)peripheral RSSI:(NSNumber *)RSSI;
 

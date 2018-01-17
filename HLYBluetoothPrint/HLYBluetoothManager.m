@@ -21,6 +21,10 @@
 @property (nonatomic, copy) HLYScanPeripheralsCompletionHandler scanPeripheralsCompletionHandler;
 @property (nonatomic, copy) HLYConnectedPeripheralCompletionHandler connectedPeripheralCompletionHandler;
 
+@property (nonatomic, strong) CBPeripheral *connectedPeripheral;
+@property (nonatomic, strong) NSString *serviceID;
+@property (nonatomic, strong) NSString *characteristicID;
+
 @end
 
 #pragma mark - CBCentralManagerDelegate
@@ -41,7 +45,6 @@
     
     self = [super init];
     if (self) {
-        _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
         _discoveredDevices = [NSMutableArray array];
     }
     return self;
@@ -59,10 +62,15 @@
 }
 
 - (void)scanPeripheralsWithCompletionHandler:(HLYScanPeripheralsCompletionHandler)completionHandler {
+    [self.discoveredDevices removeAllObjects];
     self.scanPeripheralsCompletionHandler = completionHandler;
+    [self centralManager];
 }
 
-- (void)connectPeripheral:(CBPeripheral *)peripheral completionHandler:(HLYConnectedPeripheralCompletionHandler)completionHandler {
+- (void)connectPeripheral:(CBPeripheral *)peripheral
+                serviceID:(NSString *)serviceID
+         characteristicID:(NSString *)characteristicID
+        completionHandler:(HLYConnectedPeripheralCompletionHandler)completionHandler {
     
     if (!peripheral) {
         return;
@@ -72,11 +80,13 @@
         [self cancelPeripheralConnection:peripheral];
     }
     
-    _connectedPeripheral = peripheral;
+    self.serviceID = serviceID;
+    self.characteristicID = characteristicID;
+    self.connectedPeripheral = peripheral;
     self.connectedPeripheral.delegate = self;
     self.connectedPeripheralCompletionHandler = completionHandler;
     
-    [self.centralManager connectPeripheral:peripheral options:nil];//@{CBConnectPeripheralOptionNotifyOnDisconnectionKey:@(YES)}
+    [self.centralManager connectPeripheral:self.connectedPeripheral options:nil];//@{CBConnectPeripheralOptionNotifyOnDisconnectionKey:@(YES)}
 }
 
 - (void)cancelPeripheralConnection:(CBPeripheral *)peripheral {
@@ -91,10 +101,36 @@
     
     if (self.connectedPeripheral) {
         self.connectedPeripheral.delegate = nil;
-        _connectedPeripheral = nil;
+        self.connectedPeripheral = nil;
     }
-    //取消连接 清楚可打印输入
-//    [_printeChatactersArray removeAllObjects];
+}
+
+- (void)autoConnectionPeripheralWithCompletionHandler:(HLYConnectedPeripheralCompletionHandler)completionHandler {
+    
+    [self scanPeripheralsWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSString *message) {
+        
+        if (devices.count == 0) {
+            return;
+        }
+        
+        [devices enumerateObjectsUsingBlock:^(HLYBluetoothDevice * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if ([obj.peripheral.identifier.UUIDString isEqualToString:[HLYBluetoothManager getRecentConnectionPeripheraUUID]]) {
+                
+                [self connectPeripheral:obj.peripheral
+                              serviceID:obj.serviceID
+                       characteristicID:obj.characteristicID
+                      completionHandler:^(CBService *service, NSError *error) {
+                          if (error) {
+                              NSLog(@"自动连接外设出错: %@", [error localizedDescription]);
+                          } else {
+                              NSLog(@"自动连接外设成功");
+                          }
+                          completionHandler(service, error);
+                      }];
+            }
+        }];
+    }];
 }
 
 - (void)stopScanPeripheral {
@@ -140,7 +176,6 @@
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
     
-//    [self.arrayServices removeAllObjects];
     [self.connectedPeripheral discoverServices:nil];
 }
 
@@ -149,8 +184,13 @@
 }
 
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(nonnull CBPeripheral *)peripheral error:(nullable NSError *)error {
-    NSLog(@"断开连接 %@", peripheral);
-    [self connectPeripheral:peripheral completionHandler:self.connectedPeripheralCompletionHandler];
+    NSLog(@"设备已断开连接: %@", peripheral);
+    
+    // 设备断开重连
+    [self connectPeripheral:self.connectedPeripheral
+                  serviceID:self.serviceID
+           characteristicID:self.characteristicID
+          completionHandler:self.connectedPeripheralCompletionHandler];
 }
 
 #pragma mark - CBPeripheralManagerDelegate
@@ -164,26 +204,29 @@
     if (peripheral.name.length == 0) {
         return;
     }
-    
     NSLog(@"Discovered Peripheral [Peripheral=%@, AdvertisementData=%@, RSSI=%@]", peripheral, advertisementData, RSSI);
-    
-    HLYBluetoothDevice *bluetoothDevice = [[HLYBluetoothDevice alloc] initWithPeripheral:peripheral RSSI:RSSI];
-    if (self.discoveredDevices.count > 0) {
-        // 更新蓝牙外设数据
-        BOOL isExist = NO;
-        for (int i = 0; i < self.discoveredDevices.count; i++) {
-            CBPeripheral *origPeripheral = self.discoveredDevices[i].peripheral;
-            if ([origPeripheral.identifier.UUIDString isEqualToString:peripheral.identifier.UUIDString]) {
-                isExist = YES;
-                [self.discoveredDevices replaceObjectAtIndex:i withObject:bluetoothDevice];
-                break;
-            }
-        }
         
-        if (!isExist) {
-            [self.discoveredDevices addObject:bluetoothDevice];
-        }
-    } else {
+    __block BOOL isExist = NO;
+    if (self.discoveredDevices.count > 0) {
+        // 更新蓝牙外设信号强度
+        [self.discoveredDevices enumerateObjectsUsingBlock:^(HLYBluetoothDevice * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj.peripheral.identifier.UUIDString isEqualToString:peripheral.identifier.UUIDString]) {
+                obj.RSSI = RSSI;
+                isExist = YES;
+                if (!obj.serviceID) {
+                    // 第一个值为 ServiceID, 第二个值为 CharacteristicID
+                    NSArray *serviceUUIDs = [advertisementData objectForKey:@"kCBAdvDataServiceUUIDs"];
+                    if (serviceUUIDs) {
+                        obj.serviceID = ((NSUUID *)[serviceUUIDs lastObject]).UUIDString;
+                        //obj.characteristicID = serviceUUIDs.count > 1 ? ((NSUUID *)serviceUUIDs[1]).UUIDString : nil;
+                    }
+                }
+                *stop = YES;
+            }
+        }];
+    }
+    if (!isExist) {
+        HLYBluetoothDevice *bluetoothDevice = [[HLYBluetoothDevice alloc] initWithPeripheral:peripheral RSSI:RSSI];
         [self.discoveredDevices addObject:bluetoothDevice];
     }
 
@@ -200,37 +243,54 @@
         self.connectedPeripheralCompletionHandler(nil, error);
     } else {
         for (CBService *service in peripheral.services) {
-            [service.peripheral discoverCharacteristics:nil forService:service];
+            if (self.serviceID) {
+                if([service.UUID isEqual:[CBUUID UUIDWithString:self.serviceID]]) {
+                    [service.peripheral discoverCharacteristics:(self.characteristicID ? @[[CBUUID UUIDWithString:self.characteristicID]] : nil)
+                                                     forService:service];
+                    break;
+                }
+            } else {
+                [service.peripheral discoverCharacteristics:nil forService:service];
+            }
         }
     }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error {
     
-//    if (error) {
-//        self.connectedPeripheralCompletionHandler(nil, nil, error);
-//        return;
-//    }
+    [HLYBluetoothManager setRecentConnectionPeripheralUUID:peripheral.identifier.UUIDString];
     self.connectedPeripheralCompletionHandler(service, error);
-//    for (CBCharacteristic *characteristic in service.characteristics) {
-//        CBCharacteristicProperties properties = characteristic.properties;
-//        if (properties & self.characteristicProperties) {
-//            NSLog(@"Characteristic found with Service:%@ UUID: %@", service, characteristic.UUID);
-//            self.connectedPeripheralCompletionHandler(peripheral, characteristic, nil);
-//            break;
-//        }
-//    }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(nonnull CBCharacteristic *)characteristic error:(nullable NSError *)error {
-    NSLog(@"写入成功 %@", characteristic);
+    
+}
+
+#pragma mark - Private Method
+
+- (CBCentralManager *)centralManager {
+    if (!_centralManager) {
+        _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    }
+    return _centralManager;
 }
 
 #pragma mark - Class Method
 
-+ (void)removeLastConnectionPeripheral_UUID {
++ (NSString *)getRecentConnectionPeripheraUUID {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults removeObjectForKey:@"BluetoothPeripheral_uuid"];
+    return [userDefaults objectForKey:@"HLYBluetoothPeripheralUUID"];
+}
+
++ (void)setRecentConnectionPeripheralUUID:(NSString *)UUID {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:UUID forKey:@"HLYBluetoothPeripheralUUID"];
+    [userDefaults synchronize];
+}
+
++ (void)removeRecentConnectionPeripheral {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults removeObjectForKey:@"HLYBluetoothPeripheralUUID"];
     [userDefaults synchronize];
 }
 

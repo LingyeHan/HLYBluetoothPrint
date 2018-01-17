@@ -18,7 +18,7 @@
 
 - (void)scanWithCompletionHandler:(HLYScanPeripheralsCompletionHandler)completionHandler;
 
-- (void)connectPeripheral:(CBPeripheral *)peripheral completionHandler:(void(^)(NSError *error))completionHandler;
+- (void)connectPrinterDevice:(HLYBluetoothDevice *)device completionHandler:(void(^)(NSError *error))completionHandler;
 
 - (void)sendData:(NSData *)data completionHandler:(void(^)(NSError *error))completionHandler;
 

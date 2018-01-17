@@ -37,4 +37,20 @@
     return @"未知";
 }
 
+//- (BOOL)isEqual:(id)object {
+//    if (object == self) return YES;
+//    if (!object || ![object isKindOfClass:[self class]]) return NO;
+//    if (![(id)[_peripheral identifier] isEqual:[object identifier]]) return NO;
+//    
+//    return YES;
+//}
+//
+//- (NSUInteger)hash {
+//    return [_peripheral.identifier hash];
+//}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"identifier: %@, name: %@", _peripheral.identifier, _peripheral.name];
+}
+
 @end

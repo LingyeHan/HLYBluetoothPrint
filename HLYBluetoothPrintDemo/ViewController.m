@@ -48,12 +48,16 @@
             self.bluetoothDevices = devices;
             [self.tableView reloadData];
         } else {
-            [self showAlertWithTitle:@"打描打印机" message:message];
+//            [self showAlertWithTitle:@"打描打印机" message:message];
         }
     }];
 }
 
 #pragma mark - UITableViewDataSource
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"蓝牙设备";
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -63,7 +67,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     }
     HLYBluetoothDevice *device = self.bluetoothDevices[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"蓝牙设备:%@   信号强度:%@", device.peripheral.name, [device.RSSI stringValue]];
+    cell.textLabel.text = [NSString stringWithFormat:@"名称:%@   信号强度:%@", device.peripheral.name, [device.RSSI stringValue]];
     cell.detailTextLabel.text = device.stateStringValue;
     return cell;
 }
@@ -79,7 +83,7 @@
     HLYBluetoothDevice *device = self.bluetoothDevices[indexPath.row];
 
     __weak typeof(self) wSelf = self;
-    [self.bluetoothPrinter connectPeripheral:device.peripheral completionHandler:^(NSError *error) {
+    [self.bluetoothPrinter connectPrinterDevice:device completionHandler:^(NSError *error) {
         __strong typeof(wSelf) self = wSelf;
         
         [self.tableView  reloadData];
