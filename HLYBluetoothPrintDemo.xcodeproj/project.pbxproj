@@ -1,0 +1,493 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		69268A27200DF1CB002AC142 /* HLYPrinterDataWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 69268A26200DF1CB002AC142 /* HLYPrinterDataWrapper.m */; };
+		69585D2A200883700008F40A /* HLYBluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 69585D29200883700008F40A /* HLYBluetoothManager.m */; };
+		69585D2D200889FB0008F40A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69585D2C200889FB0008F40A /* CoreBluetooth.framework */; };
+		695ED49820087CE80010A3B9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 695ED49720087CE80010A3B9 /* AppDelegate.m */; };
+		695ED49B20087CE80010A3B9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 695ED49A20087CE80010A3B9 /* ViewController.m */; };
+		695ED49E20087CE80010A3B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695ED49C20087CE80010A3B9 /* Main.storyboard */; };
+		695ED4A020087CE80010A3B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 695ED49F20087CE80010A3B9 /* Assets.xcassets */; };
+		695ED4A320087CE80010A3B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695ED4A120087CE80010A3B9 /* LaunchScreen.storyboard */; };
+		695ED4A620087CE80010A3B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 695ED4A520087CE80010A3B9 /* main.m */; };
+		695ED4B020087CE80010A3B9 /* HLYBluetoothPrintDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 695ED4AF20087CE80010A3B9 /* HLYBluetoothPrintDemoTests.m */; };
+		69C00F2E200C897E004DB1B9 /* HLYBluetoothDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C00F2D200C897E004DB1B9 /* HLYBluetoothDevice.m */; };
+		69C00F31200CABBC004DB1B9 /* HLYBluetoothPrinter.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C00F30200CABBC004DB1B9 /* HLYBluetoothPrinter.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		695ED4AC20087CE80010A3B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 695ED48B20087CE80010A3B9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 695ED49220087CE80010A3B9;
+			remoteInfo = HLYBluetoothPrintDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		69268A25200DF1CB002AC142 /* HLYPrinterDataWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLYPrinterDataWrapper.h; sourceTree = "<group>"; };
+		69268A26200DF1CB002AC142 /* HLYPrinterDataWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLYPrinterDataWrapper.m; sourceTree = "<group>"; };
+		69585D28200883700008F40A /* HLYBluetoothManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLYBluetoothManager.h; sourceTree = "<group>"; };
+		69585D29200883700008F40A /* HLYBluetoothManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLYBluetoothManager.m; sourceTree = "<group>"; };
+		69585D2C200889FB0008F40A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		695ED49320087CE80010A3B9 /* HLYBluetoothPrintDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HLYBluetoothPrintDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		695ED49620087CE80010A3B9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		695ED49720087CE80010A3B9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		695ED49920087CE80010A3B9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		695ED49A20087CE80010A3B9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		695ED49D20087CE80010A3B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		695ED49F20087CE80010A3B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		695ED4A220087CE80010A3B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		695ED4A420087CE80010A3B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		695ED4A520087CE80010A3B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		695ED4AB20087CE80010A3B9 /* HLYBluetoothPrintDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HLYBluetoothPrintDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		695ED4AF20087CE80010A3B9 /* HLYBluetoothPrintDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLYBluetoothPrintDemoTests.m; sourceTree = "<group>"; };
+		695ED4B120087CE80010A3B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		69C00F2C200C897E004DB1B9 /* HLYBluetoothDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLYBluetoothDevice.h; sourceTree = "<group>"; };
+		69C00F2D200C897E004DB1B9 /* HLYBluetoothDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLYBluetoothDevice.m; sourceTree = "<group>"; };
+		69C00F2F200CABBC004DB1B9 /* HLYBluetoothPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLYBluetoothPrinter.h; sourceTree = "<group>"; };
+		69C00F30200CABBC004DB1B9 /* HLYBluetoothPrinter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLYBluetoothPrinter.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		695ED49020087CE80010A3B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69585D2D200889FB0008F40A /* CoreBluetooth.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		695ED4A820087CE80010A3B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		69585D2720087F210008F40A /* HLYBluetoothPrint */ = {
+			isa = PBXGroup;
+			children = (
+				69585D28200883700008F40A /* HLYBluetoothManager.h */,
+				69585D29200883700008F40A /* HLYBluetoothManager.m */,
+				69C00F2C200C897E004DB1B9 /* HLYBluetoothDevice.h */,
+				69C00F2D200C897E004DB1B9 /* HLYBluetoothDevice.m */,
+				69C00F2F200CABBC004DB1B9 /* HLYBluetoothPrinter.h */,
+				69C00F30200CABBC004DB1B9 /* HLYBluetoothPrinter.m */,
+				69268A25200DF1CB002AC142 /* HLYPrinterDataWrapper.h */,
+				69268A26200DF1CB002AC142 /* HLYPrinterDataWrapper.m */,
+			);
+			path = HLYBluetoothPrint;
+			sourceTree = "<group>";
+		};
+		69585D2B200889FA0008F40A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				69585D2C200889FB0008F40A /* CoreBluetooth.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		695ED48A20087CE80010A3B9 = {
+			isa = PBXGroup;
+			children = (
+				69585D2720087F210008F40A /* HLYBluetoothPrint */,
+				695ED49520087CE80010A3B9 /* HLYBluetoothPrintDemo */,
+				695ED4AE20087CE80010A3B9 /* HLYBluetoothPrintDemoTests */,
+				695ED49420087CE80010A3B9 /* Products */,
+				69585D2B200889FA0008F40A /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		695ED49420087CE80010A3B9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				695ED49320087CE80010A3B9 /* HLYBluetoothPrintDemo.app */,
+				695ED4AB20087CE80010A3B9 /* HLYBluetoothPrintDemoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		695ED49520087CE80010A3B9 /* HLYBluetoothPrintDemo */ = {
+			isa = PBXGroup;
+			children = (
+				695ED49620087CE80010A3B9 /* AppDelegate.h */,
+				695ED49720087CE80010A3B9 /* AppDelegate.m */,
+				695ED49920087CE80010A3B9 /* ViewController.h */,
+				695ED49A20087CE80010A3B9 /* ViewController.m */,
+				695ED49C20087CE80010A3B9 /* Main.storyboard */,
+				695ED49F20087CE80010A3B9 /* Assets.xcassets */,
+				695ED4A120087CE80010A3B9 /* LaunchScreen.storyboard */,
+				695ED4A420087CE80010A3B9 /* Info.plist */,
+				695ED4A520087CE80010A3B9 /* main.m */,
+			);
+			path = HLYBluetoothPrintDemo;
+			sourceTree = "<group>";
+		};
+		695ED4AE20087CE80010A3B9 /* HLYBluetoothPrintDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				695ED4AF20087CE80010A3B9 /* HLYBluetoothPrintDemoTests.m */,
+				695ED4B120087CE80010A3B9 /* Info.plist */,
+			);
+			path = HLYBluetoothPrintDemoTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		695ED49220087CE80010A3B9 /* HLYBluetoothPrintDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 695ED4B420087CE80010A3B9 /* Build configuration list for PBXNativeTarget "HLYBluetoothPrintDemo" */;
+			buildPhases = (
+				695ED48F20087CE80010A3B9 /* Sources */,
+				695ED49020087CE80010A3B9 /* Frameworks */,
+				695ED49120087CE80010A3B9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HLYBluetoothPrintDemo;
+			productName = HLYBluetoothPrintDemo;
+			productReference = 695ED49320087CE80010A3B9 /* HLYBluetoothPrintDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		695ED4AA20087CE80010A3B9 /* HLYBluetoothPrintDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 695ED4B720087CE80010A3B9 /* Build configuration list for PBXNativeTarget "HLYBluetoothPrintDemoTests" */;
+			buildPhases = (
+				695ED4A720087CE80010A3B9 /* Sources */,
+				695ED4A820087CE80010A3B9 /* Frameworks */,
+				695ED4A920087CE80010A3B9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				695ED4AD20087CE80010A3B9 /* PBXTargetDependency */,
+			);
+			name = HLYBluetoothPrintDemoTests;
+			productName = HLYBluetoothPrintDemoTests;
+			productReference = 695ED4AB20087CE80010A3B9 /* HLYBluetoothPrintDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		695ED48B20087CE80010A3B9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = WelfareMall;
+				TargetAttributes = {
+					695ED49220087CE80010A3B9 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					695ED4AA20087CE80010A3B9 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 695ED49220087CE80010A3B9;
+					};
+				};
+			};
+			buildConfigurationList = 695ED48E20087CE80010A3B9 /* Build configuration list for PBXProject "HLYBluetoothPrintDemo" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 695ED48A20087CE80010A3B9;
+			productRefGroup = 695ED49420087CE80010A3B9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				695ED49220087CE80010A3B9 /* HLYBluetoothPrintDemo */,
+				695ED4AA20087CE80010A3B9 /* HLYBluetoothPrintDemoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		695ED49120087CE80010A3B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				695ED4A320087CE80010A3B9 /* LaunchScreen.storyboard in Resources */,
+				695ED4A020087CE80010A3B9 /* Assets.xcassets in Resources */,
+				695ED49E20087CE80010A3B9 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		695ED4A920087CE80010A3B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		695ED48F20087CE80010A3B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69585D2A200883700008F40A /* HLYBluetoothManager.m in Sources */,
+				695ED49B20087CE80010A3B9 /* ViewController.m in Sources */,
+				695ED4A620087CE80010A3B9 /* main.m in Sources */,
+				69C00F2E200C897E004DB1B9 /* HLYBluetoothDevice.m in Sources */,
+				695ED49820087CE80010A3B9 /* AppDelegate.m in Sources */,
+				69C00F31200CABBC004DB1B9 /* HLYBluetoothPrinter.m in Sources */,
+				69268A27200DF1CB002AC142 /* HLYPrinterDataWrapper.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		695ED4A720087CE80010A3B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				695ED4B020087CE80010A3B9 /* HLYBluetoothPrintDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		695ED4AD20087CE80010A3B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 695ED49220087CE80010A3B9 /* HLYBluetoothPrintDemo */;
+			targetProxy = 695ED4AC20087CE80010A3B9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		695ED49C20087CE80010A3B9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				695ED49D20087CE80010A3B9 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		695ED4A120087CE80010A3B9 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				695ED4A220087CE80010A3B9 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		695ED4B220087CE80010A3B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		695ED4B320087CE80010A3B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		695ED4B520087CE80010A3B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PZJP3CBE8G;
+				INFOPLIST_FILE = HLYBluetoothPrintDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yiyuan.HLYBluetoothPrintDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		695ED4B620087CE80010A3B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PZJP3CBE8G;
+				INFOPLIST_FILE = HLYBluetoothPrintDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yiyuan.HLYBluetoothPrintDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		695ED4B820087CE80010A3B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CY4833TA98;
+				INFOPLIST_FILE = HLYBluetoothPrintDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yiyuan.HLYBluetoothPrintDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HLYBluetoothPrintDemo.app/HLYBluetoothPrintDemo";
+			};
+			name = Debug;
+		};
+		695ED4B920087CE80010A3B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CY4833TA98;
+				INFOPLIST_FILE = HLYBluetoothPrintDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yiyuan.HLYBluetoothPrintDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HLYBluetoothPrintDemo.app/HLYBluetoothPrintDemo";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		695ED48E20087CE80010A3B9 /* Build configuration list for PBXProject "HLYBluetoothPrintDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				695ED4B220087CE80010A3B9 /* Debug */,
+				695ED4B320087CE80010A3B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		695ED4B420087CE80010A3B9 /* Build configuration list for PBXNativeTarget "HLYBluetoothPrintDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				695ED4B520087CE80010A3B9 /* Debug */,
+				695ED4B620087CE80010A3B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		695ED4B720087CE80010A3B9 /* Build configuration list for PBXNativeTarget "HLYBluetoothPrintDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				695ED4B820087CE80010A3B9 /* Debug */,
+				695ED4B920087CE80010A3B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 695ED48B20087CE80010A3B9 /* Project object */;
+}
