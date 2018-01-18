@@ -263,7 +263,9 @@
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(nonnull CBCharacteristic *)characteristic error:(nullable NSError *)error {
-    
+    if (error) {
+        NSLog(@"didWriteValueForCharacteristic error: %@",error.userInfo);
+    }
 }
 
 #pragma mark - Private Method

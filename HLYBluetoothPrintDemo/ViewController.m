@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "HLYBluetoothManager.h"
 #import "HLYBluetoothPrinter.h"
+#import "HLYPrinterDataWrapper.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -31,11 +32,42 @@
 - (IBAction)printButtonClicked:(UIButton *)sender {
 
     __weak typeof(self) wSelf = self;
-    [self.bluetoothPrinter sendData:[@"打印机测试内容太少会打印多遍 <CBPeripheral: 0x1c411c9e0, identifier = 4EDC6F3D-8FDE-4944-DFB4-7712FB801ACB, name = Printer_C96B, state = connected>\n\r" dataUsingEncoding:CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000)] completionHandler:^(NSError *error) {
+    [self.bluetoothPrinter sendData:[self createPrinterTestData] completionHandler:^(NSError *error) {
         
         __strong typeof(wSelf) self = wSelf;
         [self showAlertWithTitle:sender.titleLabel.text message:error ? [NSString stringWithFormat:@"打印失败: %@", error] : @"打印完成"];
     }];
+}
+
+- (NSData *)createPrinterTestData {
+    
+    HLYPrinterDataWrapper *dataWrapper = [[HLYPrinterDataWrapper alloc] init];
+    
+    // 店铺名称
+    [dataWrapper appendText:@"小辉哥火锅" newLine:YES alignment:HLYPrinterTextAlignmentCenter fontSize:HLYPrinterFontSizeMedium];
+    [dataWrapper appendNewLine];
+    [dataWrapper appendText:@"地址: 在火星上插上中国国旗188号" newLine:YES alignment:HLYPrinterTextAlignmentCenter fontSize:HLYPrinterFontSizeSystem];
+    [dataWrapper appendNewLine];
+    
+    [dataWrapper appendText:@"订单信息"];
+    [dataWrapper appendSeperatorLine];
+    [dataWrapper appendTitle:@"店铺编号: " value:@"1231234225556"];
+    [dataWrapper appendTitle:@"联系人: " value:@"韩先生 13867865432"];
+    [dataWrapper appendTitle:@"送餐地址: " value:@"中国地球村美国啊地球村美国啊地球村149号"];
+    [dataWrapper appendTitle:@"下单时间: " value:@"2017.10.23 16:34"];
+    [dataWrapper appendNewLine];
+    
+    [dataWrapper appendText:@"订单详情"];
+    [dataWrapper appendSeperatorLine];
+    [dataWrapper appendLeftText:@"蚂蚁上树" middleText:@"X1" rightText:@"42.00"];
+    [dataWrapper appendLeftText:@"毛血旺" middleText:@"X2" rightText:@"182.00"];
+    [dataWrapper appendLeftText:@"韭菜炒鸡蛋" middleText:@"X1" rightText:@"42.00"];
+    [dataWrapper appendNewLine];
+    [dataWrapper appendText:@"总价: 152.50" newLine:YES alignment:HLYPrinterTextAlignmentRight fontSize:HLYPrinterFontSizeMedium];
+    //
+//    [dataWrapper appendText:@"店铺名称" newLine:YES];
+    
+    return dataWrapper.printerData;
 }
 
 - (void)scanPeripherals {
