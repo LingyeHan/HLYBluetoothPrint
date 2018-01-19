@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => "https://github.com/LingyeHan/HLYBluetoothPrint.git", :tag => s.version }
   # s.social_media_url = 'https://twitter.com/NAME'
 
-  s.platform     = :ios, '8.0'
+  s.platform     = :ios, '9.0'
   # s.ios.deployment_target = '8.0'
   # s.osx.deployment_target = '10.9'
   s.requires_arc = true
