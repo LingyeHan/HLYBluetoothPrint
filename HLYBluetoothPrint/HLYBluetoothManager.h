@@ -13,16 +13,6 @@ typedef void (^HLYScanPeripheralsCompletionHandler)(NSArray<HLYBluetoothDevice *
 typedef void (^HLYConnectedPeripheralCompletionHandler)(CBService *service, NSError *error);
 typedef void (^HLYAutoConnectedPeripheralCompletionHandler)(NSArray<HLYBluetoothDevice *> *devices, CBService *service, NSError *error);
 
-//@protocol HLYBluetoothManagerDelegate <NSObject>
-//
-//@required
-//
-//- (void)peripheralManagerDidUpdateCharacteristicsWithService:(CBService *)service:(CBService *)service;
-//
-//@optional
-//
-//@end
-
 @interface HLYBluetoothManager : NSObject
 
 @property (nonatomic, readonly) BOOL isConnected;

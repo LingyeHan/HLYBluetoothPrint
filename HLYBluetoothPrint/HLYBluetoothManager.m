@@ -27,8 +27,6 @@
 
 @end
 
-#warning 连接超时  二维码图片打印
-
 #pragma mark - CBCentralManagerDelegate
 
 @implementation HLYBluetoothManager
