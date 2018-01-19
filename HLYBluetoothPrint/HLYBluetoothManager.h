@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "HLYBluetoothDevice.h"
+#import <HLYBluetoothPrint/HLYBluetoothDevice.h>
 
 typedef void (^HLYScanPeripheralsCompletionHandler)(NSArray<HLYBluetoothDevice *> *devices, NSError *error);
 typedef void (^HLYConnectedPeripheralCompletionHandler)(CBService *service, NSError *error);

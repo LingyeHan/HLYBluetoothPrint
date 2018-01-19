@@ -37,6 +37,7 @@
 		69268A26200DF1CB002AC142 /* HLYPrinterDataWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLYPrinterDataWrapper.m; sourceTree = "<group>"; };
 		69268A2B201098D8002AC142 /* UIImage+HLYBitmap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+HLYBitmap.h"; sourceTree = "<group>"; };
 		69268A2C201098D8002AC142 /* UIImage+HLYBitmap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+HLYBitmap.m"; sourceTree = "<group>"; };
+		69268A332011FA24002AC142 /* HLYBluetoothPrint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLYBluetoothPrint.h; sourceTree = "<group>"; };
 		69585D28200883700008F40A /* HLYBluetoothManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLYBluetoothManager.h; sourceTree = "<group>"; };
 		69585D29200883700008F40A /* HLYBluetoothManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLYBluetoothManager.m; sourceTree = "<group>"; };
 		69585D2C200889FB0008F40A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
@@ -91,6 +92,7 @@
 				69268A26200DF1CB002AC142 /* HLYPrinterDataWrapper.m */,
 				69268A2B201098D8002AC142 /* UIImage+HLYBitmap.h */,
 				69268A2C201098D8002AC142 /* UIImage+HLYBitmap.m */,
+				69268A332011FA24002AC142 /* HLYBluetoothPrint.h */,
 			);
 			path = HLYBluetoothPrint;
 			sourceTree = "<group>";

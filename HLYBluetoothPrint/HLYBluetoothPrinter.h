@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "HLYBluetoothManager.h"
+#import <HLYBluetoothPrint/HLYBluetoothManager.h>
 
 @interface HLYBluetoothPrinter : NSObject
 
