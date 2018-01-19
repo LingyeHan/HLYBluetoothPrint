@@ -9,19 +9,17 @@
 
 @implementation UIImage (HLYBitmap)
 
-- (NSData *)bitmapData
-{
+- (NSData *)bitmapData {
+    
     CGImageRef imageRef = self.CGImage;
     // Create a bitmap context to draw the uiimage into
     CGContextRef context = [self bitmapRGBA8Context];
-    
     if(!context) {
         return nil;
     }
     
     size_t width = CGImageGetWidth(imageRef);
     size_t height = CGImageGetHeight(imageRef);
-    
     CGRect rect = CGRectMake(0, 0, width, height);
     
     // Draw image into the context to get the raw image data
@@ -29,8 +27,6 @@
     
     // Get a pointer to the data
     uint32_t *bitmapData = (uint32_t *)CGBitmapContextGetData(context);
-    
-    
     if(bitmapData) {
         
         uint8_t *m_imageData = (uint8_t *) malloc(width * height/8 + 8*height/8);
@@ -109,8 +105,8 @@
     return nil ;
 }
 
-- (CGContextRef)bitmapRGBA8Context
-{
+- (CGContextRef)bitmapRGBA8Context {
+    
     CGImageRef imageRef = self.CGImage;
     if (!imageRef) {
         return NULL;
@@ -147,7 +143,6 @@
     }
     
     //Create bitmap context
-    
     context = CGBitmapContextCreate(bitmapData,
                                     width,
                                     height,
@@ -163,11 +158,9 @@
     CGColorSpaceRelease(colorSpace);
     
     return context;
-    
 }
 
-- (UIImage *)imageWithscaleMaxWidth:(CGFloat)maxWidth
-{
+- (UIImage *)imageWithscaleMaxWidth:(CGFloat)maxWidth {
     CGFloat width = self.size.width;
     if (width > maxWidth)
     {
@@ -185,17 +178,13 @@
     return self;
 }
 
-- (UIImage *)blackAndWhiteImage
-{
-    //    CGSize size = self.size;
+- (UIImage *)blackAndWhiteImage {
+    
     CIImage *beginImage = [CIImage imageWithCGImage:self.CGImage];
     CIFilter *filter = [CIFilter filterWithName:@"CIColorMonochrome"
                                   keysAndValues:kCIInputImageKey,beginImage,kCIInputColorKey,[CIColor colorWithCGColor:[UIColor blackColor].CGColor],nil];
     
     CIImage *outputImage = [filter outputImage];
-    
-    //    UIImage *newImage = [UIImage createNonInterpolatedUIImageFormCIImage:outputImage withSize:size.width];
-    
     CIContext *context = [CIContext contextWithOptions:nil];
     CGImageRef imageRef = [context createCGImage:outputImage fromRect:outputImage.extent];
     UIImage *newImage = [UIImage imageWithCGImage:imageRef];

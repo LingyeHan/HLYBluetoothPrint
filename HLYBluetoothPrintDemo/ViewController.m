@@ -26,7 +26,8 @@
     [super viewDidLoad];
     
     self.bluetoothPrinter = [HLYBluetoothPrinter printer];
-    [self scanPeripherals];
+    [self autoConnect];
+//    [self scanPrinters];
 }
 
 - (IBAction)printButtonClicked:(UIButton *)sender {
@@ -64,23 +65,45 @@
     [dataWrapper appendLeftText:@"韭菜炒鸡蛋" middleText:@"X1" rightText:@"42.00"];
     [dataWrapper appendNewLine];
     [dataWrapper appendText:@"总价: 152.50" newLine:YES alignment:HLYPrinterTextAlignmentRight fontSize:HLYPrinterFontSizeMedium];
-    //
-//    [dataWrapper appendText:@"店铺名称" newLine:YES];
+    [dataWrapper appendNewLine];
+    [dataWrapper appendNewLine];
+    [dataWrapper appendText:@"备注：不要辣!不要辣!不要辣!"];
+    [dataWrapper appendNewLine];
+    [dataWrapper appendNewLine];
+    [dataWrapper appendQRCodeWithInfo:@"https://m.zuifuli.com/app/download" size:8];
+    [dataWrapper appendText:@"扫描二维码 下载最福利" newLine:YES alignment:HLYPrinterTextAlignmentCenter fontSize:HLYPrinterFontSizeSystem];
+    [dataWrapper appendNewLine];
+    [dataWrapper appendNewLine];
     
     return dataWrapper.printerData;
 }
 
-- (void)scanPeripherals {
+- (void)autoConnect {
     
     __weak typeof(self) wSelf = self;
-    [self.bluetoothPrinter scanWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSString *message) {
-        
+    [self.bluetoothPrinter autoConnectWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, CBService *service, NSError *error) {
+ 
         __strong typeof(wSelf) self = wSelf;
-        if (devices.count > 0) {
+        if (error) {
+            [self showAlertWithTitle:@"蓝牙打印机" message:[NSString stringWithFormat:@"自动连接失败: %@", [error localizedDescription]]];
+        } else {
             self.bluetoothDevices = devices;
             [self.tableView reloadData];
+        }
+    }];
+}
+
+- (void)scanPrinters {
+    
+    __weak typeof(self) wSelf = self;
+    [self.bluetoothPrinter scanWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSError *error) {
+        
+        __strong typeof(wSelf) self = wSelf;
+        if (error) {
+            [self showAlertWithTitle:@"蓝牙打印机" message:[NSString stringWithFormat:@"扫描失败: %@", [error localizedDescription]]];
         } else {
-//            [self showAlertWithTitle:@"打描打印机" message:message];
+            self.bluetoothDevices = devices;
+            [self.tableView reloadData];
         }
     }];
 }
@@ -115,11 +138,11 @@
     HLYBluetoothDevice *device = self.bluetoothDevices[indexPath.row];
 
     __weak typeof(self) wSelf = self;
-    [self.bluetoothPrinter connectPrinterDevice:device completionHandler:^(NSError *error) {
+    [self.bluetoothPrinter connectWithDevice:device completionHandler:^(NSError *error) {
         __strong typeof(wSelf) self = wSelf;
         
         [self.tableView  reloadData];
-        [self showAlertWithTitle:@"连接打印机" message:error ? [NSString stringWithFormat:@"连接失败: %@", [error localizedDescription]] : @"连接成功"];
+        [self showAlertWithTitle:@"蓝牙打印机" message:error ? [NSString stringWithFormat:@"连接失败: %@", [error localizedDescription]] : @"连接成功"];
     }];
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

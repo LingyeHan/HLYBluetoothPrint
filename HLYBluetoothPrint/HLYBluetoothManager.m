@@ -17,15 +17,17 @@
 
 @property (nonatomic, assign) CBCharacteristicProperties characteristicProperties;
 
-@property (nonatomic, strong) NSMutableArray<HLYBluetoothDevice *> *discoveredDevices;
 @property (nonatomic, copy) HLYScanPeripheralsCompletionHandler scanPeripheralsCompletionHandler;
 @property (nonatomic, copy) HLYConnectedPeripheralCompletionHandler connectedPeripheralCompletionHandler;
+@property (nonatomic, strong) NSMutableArray<HLYBluetoothDevice *> *discoveredDevices;
 
 @property (nonatomic, strong) CBPeripheral *connectedPeripheral;
 @property (nonatomic, strong) NSString *serviceID;
 @property (nonatomic, strong) NSString *characteristicID;
 
 @end
+
+#warning 连接超时  二维码图片打印
 
 #pragma mark - CBCentralManagerDelegate
 
@@ -61,6 +63,34 @@
     return self.connectedPeripheral.state == CBPeripheralStateConnected;
 }
 
+- (NSString *)stateMessage {
+    
+    NSString *message = nil;
+    switch (self.centralManager.state) {
+        case CBCentralManagerStatePoweredOn:
+            message = @"蓝牙已打开";
+            break;
+        case CBCentralManagerStatePoweredOff:
+            message = @"蓝牙已关闭";
+            break;
+        case CBCentralManagerStateUnsupported:
+            message = @"该设备不支持蓝牙";
+            break;
+        case CBCentralManagerStateUnauthorized:
+            message = @"蓝牙未被授权";
+            break;
+        case CBCentralManagerStateResetting:
+            message = @"蓝牙正在重置";
+            break;
+        case CBCentralManagerStateUnknown:
+            message = @"未知蓝牙";
+            break;
+        default:
+            break;
+    }
+    return message;
+}
+
 - (void)scanPeripheralsWithCompletionHandler:(HLYScanPeripheralsCompletionHandler)completionHandler {
     [self.discoveredDevices removeAllObjects];
     self.scanPeripheralsCompletionHandler = completionHandler;
@@ -72,21 +102,29 @@
          characteristicID:(NSString *)characteristicID
         completionHandler:(HLYConnectedPeripheralCompletionHandler)completionHandler {
     
+    self.connectedPeripheralCompletionHandler = completionHandler;
     if (!peripheral) {
         return;
     }
+    if (peripheral.state == CBPeripheralStateConnecting || peripheral.state == CBPeripheralStateConnected) {
+        return;
+    }
     
-    if (self.connectedPeripheral != peripheral) {
-        [self cancelPeripheralConnection:peripheral];
+    if (self.connectedPeripheral) {
+        [self cancelPeripheralConnection:self.connectedPeripheral];
     }
     
     self.serviceID = serviceID;
     self.characteristicID = characteristicID;
     self.connectedPeripheral = peripheral;
     self.connectedPeripheral.delegate = self;
-    self.connectedPeripheralCompletionHandler = completionHandler;
     
     [self.centralManager connectPeripheral:self.connectedPeripheral options:nil];//@{CBConnectPeripheralOptionNotifyOnDisconnectionKey:@(YES)}
+    
+    // 连接超时默认 5 秒
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self connectTimeout];
+    });
 }
 
 - (void)cancelPeripheralConnection:(CBPeripheral *)peripheral {
@@ -94,8 +132,6 @@
     if (!peripheral) {
         return;
     }
-    //去除次自动连接
-//    RemoveLastConnectionPeripheral_UUID();
     
     [self.centralManager cancelPeripheralConnection:peripheral];
     
@@ -105,11 +141,19 @@
     }
 }
 
-- (void)autoConnectionPeripheralWithCompletionHandler:(HLYConnectedPeripheralCompletionHandler)completionHandler {
+- (void)autoConnectionPeripheralWithCompletionHandler:(HLYAutoConnectedPeripheralCompletionHandler)completionHandler {
     
-    [self scanPeripheralsWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSString *message) {
-        
-        if (devices.count == 0) {
+    if (self.isConnected) {
+        if (completionHandler) {
+            completionHandler(nil, nil, [NSError errorWithDomain:@"HLYBluetoothPeripheral" code:1 userInfo:@{NSLocalizedDescriptionKey : @"蓝牙设置已连接"}]);
+        }
+        return;
+    }
+    
+    [self scanPeripheralsWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSError *error) {
+
+        if (devices.count == 0 || error) {
+            completionHandler(devices, nil, error);
             return;
         }
         
@@ -121,13 +165,14 @@
                               serviceID:obj.serviceID
                        characteristicID:obj.characteristicID
                       completionHandler:^(CBService *service, NSError *error) {
+                          NSError *connectionError = nil;
                           if (error) {
-                              NSLog(@"自动连接外设出错: %@", [error localizedDescription]);
-                          } else {
-                              NSLog(@"自动连接外设成功");
+                              NSString *errorMessage = [NSString stringWithFormat:@"自动连接蓝牙设备出错: %@", [error localizedDescription]];
+                              connectionError = [NSError errorWithDomain:@"HLYBluetoothPeripheral" code:1 userInfo:@{NSLocalizedDescriptionKey : errorMessage}];
                           }
-                          completionHandler(service, error);
+                          completionHandler(devices, service, connectionError);
                       }];
+                *stop = YES;
             }
         }];
     }];
@@ -144,32 +189,11 @@
  */
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
     
-    NSString *message = nil;
-    switch (central.state) {
-        case CBCentralManagerStatePoweredOn:
-            [self.centralManager scanForPeripheralsWithServices:nil options:nil];
-            break;
-        case CBCentralManagerStatePoweredOff:
-            message = @"蓝牙已关闭";
-            break;
-        case CBCentralManagerStateUnsupported:
-            message = @"该设备不支持蓝牙";
-            break;
-        case CBCentralManagerStateUnauthorized:
-            message = @"蓝牙未被授权";
-            break;
-        case CBCentralManagerStateResetting:
-            message = @"正在重置";
-            break;
-        case CBCentralManagerStateUnknown:
-            message = @"未知";
-            break;
-        default:
-            break;
-    }
-    if (message) {
+    if (central.state == CBCentralManagerStatePoweredOn) {
+        [self.centralManager scanForPeripheralsWithServices:nil options:nil];
+    } else {
         if (self.scanPeripheralsCompletionHandler) {
-            self.scanPeripheralsCompletionHandler(nil, message);
+            self.scanPeripheralsCompletionHandler(nil, [NSError errorWithDomain:@"HLYBluetoothPeripheral" code:1 userInfo:@{NSLocalizedDescriptionKey : @"设备蓝牙未在打开状态"}]);
         }
     }
 }
@@ -184,19 +208,19 @@
 }
 
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(nonnull CBPeripheral *)peripheral error:(nullable NSError *)error {
-    NSLog(@"设备已断开连接: %@", peripheral);
+    NSLog(@"蓝牙设备已断开连接: %@", peripheral);
     
     // 设备断开重连
-    [self connectPeripheral:self.connectedPeripheral
-                  serviceID:self.serviceID
-           characteristicID:self.characteristicID
-          completionHandler:self.connectedPeripheralCompletionHandler];
+//    [self connectPeripheral:self.connectedPeripheral
+//                  serviceID:self.serviceID
+//           characteristicID:self.characteristicID
+//          completionHandler:self.connectedPeripheralCompletionHandler];
 }
 
 #pragma mark - CBPeripheralManagerDelegate
 
 - (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral {
-    
+    NSLog(@"蓝牙设备状态改变: %@", self.stateMessage);
 }
 
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary<NSString *, id> *)advertisementData RSSI:(NSNumber *)RSSI {
@@ -219,6 +243,9 @@
                     if (serviceUUIDs) {
                         obj.serviceID = ((NSUUID *)[serviceUUIDs lastObject]).UUIDString;
                         //obj.characteristicID = serviceUUIDs.count > 1 ? ((NSUUID *)serviceUUIDs[1]).UUIDString : nil;
+                    } else {
+                        // 没找到 ServiceUUID 重扫描，直到找到 ServiceUUID 为止
+//                        [self scanPeripheralsWithCompletionHandler:self.scanPeripheralsCompletionHandler];
                     }
                 }
                 *stop = YES;
@@ -231,7 +258,7 @@
     }
 
     if (self.scanPeripheralsCompletionHandler) {
-        self.scanPeripheralsCompletionHandler([self.discoveredDevices copy], @"蓝牙已打开");
+        self.scanPeripheralsCompletionHandler([self.discoveredDevices copy], nil);
     }
 }
 
@@ -269,6 +296,20 @@
 }
 
 #pragma mark - Private Method
+
+- (void)connectTimeout {
+    
+    if (self.isConnected) {
+        return;
+    }
+    
+    [self cancelPeripheralConnection:self.connectedPeripheral];
+    if (self.connectedPeripheralCompletionHandler) {
+        self.connectedPeripheralCompletionHandler(nil, [NSError errorWithDomain:@"HLYBluetoothPeripheral" code:1 userInfo:@{NSLocalizedDescriptionKey : @"蓝牙设备连接超时"}]);
+    }
+}
+
+#pragma mark - Getter Method
 
 - (CBCentralManager *)centralManager {
     if (!_centralManager) {
