@@ -7,9 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "HLYBluetoothManager.h"
-#import "HLYBluetoothPrinter.h"
-#import "HLYPrinterDataWrapper.h"
+#import <HLYBluetoothPrint/HLYBluetoothPrint.h>
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 

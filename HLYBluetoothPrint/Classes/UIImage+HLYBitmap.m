@@ -194,7 +194,7 @@
 
 @end
 
-@implementation UIImage (QRCode)
+@implementation UIImage (HLYQRCode)
 
 + (UIImage *)barCodeImageWithInfo:(NSString *)info
 {
@@ -270,10 +270,6 @@
     return [UIImage imageWithCGImage:scaledImage];
 }
 
-void ProviderReleaseData (void *info, const void *data, size_t size){
-    free((void*)data);
-}
-
 + (UIImage*)imageBgColorToTransparentWith:(UIImage*)image withRed:(CGFloat)red andGreen:(CGFloat)green andBlue:(CGFloat)blue{
     const int imageWidth = image.size.width;
     const int imageHeight = image.size.height;
@@ -300,7 +296,7 @@ void ProviderReleaseData (void *info, const void *data, size_t size){
         }
     }
     // context to image
-    CGDataProviderRef dataProvider = CGDataProviderCreateWithData(NULL, rgbImageBuf, bytesPerRow * imageHeight, ProviderReleaseData);
+    CGDataProviderRef dataProvider = CGDataProviderCreateWithData(NULL, rgbImageBuf, bytesPerRow * imageHeight, HLYProviderReleaseData);
     CGImageRef imageRef = CGImageCreate(imageWidth, imageHeight, 8, 32, bytesPerRow, colorSpace,
                                         kCGImageAlphaLast | kCGBitmapByteOrder32Little, dataProvider,
                                         NULL, true, kCGRenderingIntentDefault);
@@ -311,6 +307,10 @@ void ProviderReleaseData (void *info, const void *data, size_t size){
     CGContextRelease(context);
     CGColorSpaceRelease(colorSpace);
     return resultUIImage;
+}
+
+void HLYProviderReleaseData (void *info, const void *data, size_t size){
+    free((void*)data);
 }
 
 @end

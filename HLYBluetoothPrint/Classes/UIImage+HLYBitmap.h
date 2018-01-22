@@ -51,7 +51,7 @@ typedef NS_ENUM(NSInteger,BitPixels) {
 
 #pragma mark - 制作二维码和条形码
 
-@interface UIImage (QRCode)
+@interface UIImage (HLYQRCode)
 
 /**
  *  创建条形码

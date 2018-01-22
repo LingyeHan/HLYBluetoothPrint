@@ -148,11 +148,19 @@
         return;
     }
     
+//    if (![HLYBluetoothManager getRecentConnectionPeripheraUUID]) {
+//        completionHandler(nil, nil, [NSError errorWithDomain:@"HLYBluetoothPeripheral" code:1 userInfo:@{NSLocalizedDescriptionKey : @"未连接过蓝牙设备，无法自动连接"}]);
+//        return;
+//    }
+    
     [self scanPeripheralsWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSError *error) {
 
-        if (devices.count == 0 || error) {
+        if (devices.count == 0 || error || self.isConnected) {
             completionHandler(devices, nil, error);
             return;
+        }
+        if (![HLYBluetoothManager getRecentConnectionPeripheraUUID]) {
+            completionHandler(devices, nil, [NSError errorWithDomain:@"HLYBluetoothPeripheral" code:1 userInfo:@{NSLocalizedDescriptionKey : @"未连接过任何设备"}]);
         }
         
         [devices enumerateObjectsUsingBlock:^(HLYBluetoothDevice * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

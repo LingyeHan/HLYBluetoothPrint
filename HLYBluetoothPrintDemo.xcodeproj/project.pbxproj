@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		69268A27200DF1CB002AC142 /* HLYPrinterDataWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 69268A26200DF1CB002AC142 /* HLYPrinterDataWrapper.m */; };
-		69268A2D201098D8002AC142 /* UIImage+HLYBitmap.m in Sources */ = {isa = PBXBuildFile; fileRef = 69268A2C201098D8002AC142 /* UIImage+HLYBitmap.m */; };
-		69585D2A200883700008F40A /* HLYBluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 69585D29200883700008F40A /* HLYBluetoothManager.m */; };
+		0388E96EFB746A1B4192617B /* libPods-HLYBluetoothPrintDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4F16A8F14D01FC0E7749A1F /* libPods-HLYBluetoothPrintDemo.a */; };
 		69585D2D200889FB0008F40A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69585D2C200889FB0008F40A /* CoreBluetooth.framework */; };
 		695ED49820087CE80010A3B9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 695ED49720087CE80010A3B9 /* AppDelegate.m */; };
 		695ED49B20087CE80010A3B9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 695ED49A20087CE80010A3B9 /* ViewController.m */; };
@@ -17,9 +15,7 @@
 		695ED4A020087CE80010A3B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 695ED49F20087CE80010A3B9 /* Assets.xcassets */; };
 		695ED4A320087CE80010A3B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 695ED4A120087CE80010A3B9 /* LaunchScreen.storyboard */; };
 		695ED4A620087CE80010A3B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 695ED4A520087CE80010A3B9 /* main.m */; };
-		695ED4B020087CE80010A3B9 /* HLYBluetoothPrintDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 695ED4AF20087CE80010A3B9 /* HLYBluetoothPrintDemoTests.m */; };
-		69C00F2E200C897E004DB1B9 /* HLYBluetoothDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C00F2D200C897E004DB1B9 /* HLYBluetoothDevice.m */; };
-		69C00F31200CABBC004DB1B9 /* HLYBluetoothPrinter.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C00F30200CABBC004DB1B9 /* HLYBluetoothPrinter.m */; };
+		69B7EE9C8D1E6CB9FD41A7D5 /* libPods-HLYBluetoothPrintDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06913C9DF4C69EBCB53FA3FC /* libPods-HLYBluetoothPrintDemoTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,14 +28,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		69268A50201201B6002AC142 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		69268A25200DF1CB002AC142 /* HLYPrinterDataWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLYPrinterDataWrapper.h; sourceTree = "<group>"; };
-		69268A26200DF1CB002AC142 /* HLYPrinterDataWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLYPrinterDataWrapper.m; sourceTree = "<group>"; };
-		69268A2B201098D8002AC142 /* UIImage+HLYBitmap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+HLYBitmap.h"; sourceTree = "<group>"; };
-		69268A2C201098D8002AC142 /* UIImage+HLYBitmap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+HLYBitmap.m"; sourceTree = "<group>"; };
-		69268A332011FA24002AC142 /* HLYBluetoothPrint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLYBluetoothPrint.h; sourceTree = "<group>"; };
-		69585D28200883700008F40A /* HLYBluetoothManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLYBluetoothManager.h; sourceTree = "<group>"; };
-		69585D29200883700008F40A /* HLYBluetoothManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLYBluetoothManager.m; sourceTree = "<group>"; };
+		06913C9DF4C69EBCB53FA3FC /* libPods-HLYBluetoothPrintDemoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HLYBluetoothPrintDemoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		323E5B7D55B44518AE892143 /* Pods-HLYBluetoothPrintDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HLYBluetoothPrintDemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HLYBluetoothPrintDemoTests/Pods-HLYBluetoothPrintDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3A219FEA0C1C5E31DE679600 /* Pods-HLYBluetoothPrintDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HLYBluetoothPrintDemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HLYBluetoothPrintDemoTests/Pods-HLYBluetoothPrintDemoTests.release.xcconfig"; sourceTree = "<group>"; };
+		3A9DC33B43879BE8A6B2FB27 /* Pods-HLYBluetoothPrintDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HLYBluetoothPrintDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HLYBluetoothPrintDemo/Pods-HLYBluetoothPrintDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		69585D2C200889FB0008F40A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		695ED49320087CE80010A3B9 /* HLYBluetoothPrintDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HLYBluetoothPrintDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		695ED49620087CE80010A3B9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -52,12 +58,8 @@
 		695ED4A420087CE80010A3B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		695ED4A520087CE80010A3B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		695ED4AB20087CE80010A3B9 /* HLYBluetoothPrintDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HLYBluetoothPrintDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		695ED4AF20087CE80010A3B9 /* HLYBluetoothPrintDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLYBluetoothPrintDemoTests.m; sourceTree = "<group>"; };
-		695ED4B120087CE80010A3B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		69C00F2C200C897E004DB1B9 /* HLYBluetoothDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLYBluetoothDevice.h; sourceTree = "<group>"; };
-		69C00F2D200C897E004DB1B9 /* HLYBluetoothDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLYBluetoothDevice.m; sourceTree = "<group>"; };
-		69C00F2F200CABBC004DB1B9 /* HLYBluetoothPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLYBluetoothPrinter.h; sourceTree = "<group>"; };
-		69C00F30200CABBC004DB1B9 /* HLYBluetoothPrinter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HLYBluetoothPrinter.m; sourceTree = "<group>"; };
+		9278D6F163D74917A2367404 /* Pods-HLYBluetoothPrintDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HLYBluetoothPrintDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-HLYBluetoothPrintDemo/Pods-HLYBluetoothPrintDemo.release.xcconfig"; sourceTree = "<group>"; };
+		E4F16A8F14D01FC0E7749A1F /* libPods-HLYBluetoothPrintDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HLYBluetoothPrintDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				69585D2D200889FB0008F40A /* CoreBluetooth.framework in Frameworks */,
+				0388E96EFB746A1B4192617B /* libPods-HLYBluetoothPrintDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,26 +76,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69B7EE9C8D1E6CB9FD41A7D5 /* libPods-HLYBluetoothPrintDemoTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		42AF341264A3590D383BB854 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3A9DC33B43879BE8A6B2FB27 /* Pods-HLYBluetoothPrintDemo.debug.xcconfig */,
+				9278D6F163D74917A2367404 /* Pods-HLYBluetoothPrintDemo.release.xcconfig */,
+				323E5B7D55B44518AE892143 /* Pods-HLYBluetoothPrintDemoTests.debug.xcconfig */,
+				3A219FEA0C1C5E31DE679600 /* Pods-HLYBluetoothPrintDemoTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		69585D2720087F210008F40A /* HLYBluetoothPrint */ = {
 			isa = PBXGroup;
 			children = (
-				69585D28200883700008F40A /* HLYBluetoothManager.h */,
-				69585D29200883700008F40A /* HLYBluetoothManager.m */,
-				69C00F2C200C897E004DB1B9 /* HLYBluetoothDevice.h */,
-				69C00F2D200C897E004DB1B9 /* HLYBluetoothDevice.m */,
-				69C00F2F200CABBC004DB1B9 /* HLYBluetoothPrinter.h */,
-				69C00F30200CABBC004DB1B9 /* HLYBluetoothPrinter.m */,
-				69268A25200DF1CB002AC142 /* HLYPrinterDataWrapper.h */,
-				69268A26200DF1CB002AC142 /* HLYPrinterDataWrapper.m */,
-				69268A2B201098D8002AC142 /* UIImage+HLYBitmap.h */,
-				69268A2C201098D8002AC142 /* UIImage+HLYBitmap.m */,
-				69268A332011FA24002AC142 /* HLYBluetoothPrint.h */,
 			);
 			path = HLYBluetoothPrint;
 			sourceTree = "<group>";
@@ -101,6 +105,8 @@
 			isa = PBXGroup;
 			children = (
 				69585D2C200889FB0008F40A /* CoreBluetooth.framework */,
+				E4F16A8F14D01FC0E7749A1F /* libPods-HLYBluetoothPrintDemo.a */,
+				06913C9DF4C69EBCB53FA3FC /* libPods-HLYBluetoothPrintDemoTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -110,9 +116,9 @@
 			children = (
 				69585D2720087F210008F40A /* HLYBluetoothPrint */,
 				695ED49520087CE80010A3B9 /* HLYBluetoothPrintDemo */,
-				695ED4AE20087CE80010A3B9 /* HLYBluetoothPrintDemoTests */,
 				695ED49420087CE80010A3B9 /* Products */,
 				69585D2B200889FA0008F40A /* Frameworks */,
+				42AF341264A3590D383BB854 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,15 +147,6 @@
 			path = HLYBluetoothPrintDemo;
 			sourceTree = "<group>";
 		};
-		695ED4AE20087CE80010A3B9 /* HLYBluetoothPrintDemoTests */ = {
-			isa = PBXGroup;
-			children = (
-				695ED4AF20087CE80010A3B9 /* HLYBluetoothPrintDemoTests.m */,
-				695ED4B120087CE80010A3B9 /* Info.plist */,
-			);
-			path = HLYBluetoothPrintDemoTests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -157,9 +154,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 695ED4B420087CE80010A3B9 /* Build configuration list for PBXNativeTarget "HLYBluetoothPrintDemo" */;
 			buildPhases = (
+				64362A1F8A8B835DE80851AE /* [CP] Check Pods Manifest.lock */,
 				695ED48F20087CE80010A3B9 /* Sources */,
 				695ED49020087CE80010A3B9 /* Frameworks */,
 				695ED49120087CE80010A3B9 /* Resources */,
+				69268A50201201B6002AC142 /* Embed Frameworks */,
+				74572C8D96D19E76593D6348 /* [CP] Embed Pods Frameworks */,
+				7D5E2599709926468A2BC293 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -174,9 +175,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 695ED4B720087CE80010A3B9 /* Build configuration list for PBXNativeTarget "HLYBluetoothPrintDemoTests" */;
 			buildPhases = (
+				68C6DDEAF4B5A22A250EB1AD /* [CP] Check Pods Manifest.lock */,
 				695ED4A720087CE80010A3B9 /* Sources */,
 				695ED4A820087CE80010A3B9 /* Frameworks */,
 				695ED4A920087CE80010A3B9 /* Resources */,
+				0A0A3CB0EE365A29E101B86E /* [CP] Embed Pods Frameworks */,
+				06088C6A26552C0AAFEE0F01 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -247,19 +251,113 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		06088C6A26552C0AAFEE0F01 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HLYBluetoothPrintDemoTests/Pods-HLYBluetoothPrintDemoTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0A0A3CB0EE365A29E101B86E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HLYBluetoothPrintDemoTests/Pods-HLYBluetoothPrintDemoTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		64362A1F8A8B835DE80851AE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HLYBluetoothPrintDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		68C6DDEAF4B5A22A250EB1AD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HLYBluetoothPrintDemoTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		74572C8D96D19E76593D6348 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HLYBluetoothPrintDemo/Pods-HLYBluetoothPrintDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7D5E2599709926468A2BC293 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HLYBluetoothPrintDemo/Pods-HLYBluetoothPrintDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		695ED48F20087CE80010A3B9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69585D2A200883700008F40A /* HLYBluetoothManager.m in Sources */,
 				695ED49B20087CE80010A3B9 /* ViewController.m in Sources */,
 				695ED4A620087CE80010A3B9 /* main.m in Sources */,
-				69C00F2E200C897E004DB1B9 /* HLYBluetoothDevice.m in Sources */,
-				69268A2D201098D8002AC142 /* UIImage+HLYBitmap.m in Sources */,
 				695ED49820087CE80010A3B9 /* AppDelegate.m in Sources */,
-				69C00F31200CABBC004DB1B9 /* HLYBluetoothPrinter.m in Sources */,
-				69268A27200DF1CB002AC142 /* HLYPrinterDataWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,7 +365,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				695ED4B020087CE80010A3B9 /* HLYBluetoothPrintDemoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,6 +504,7 @@
 		};
 		695ED4B520087CE80010A3B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A9DC33B43879BE8A6B2FB27 /* Pods-HLYBluetoothPrintDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -422,6 +520,7 @@
 		};
 		695ED4B620087CE80010A3B9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9278D6F163D74917A2367404 /* Pods-HLYBluetoothPrintDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -437,6 +536,7 @@
 		};
 		695ED4B820087CE80010A3B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 323E5B7D55B44518AE892143 /* Pods-HLYBluetoothPrintDemoTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -452,6 +552,7 @@
 		};
 		695ED4B920087CE80010A3B9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A219FEA0C1C5E31DE679600 /* Pods-HLYBluetoothPrintDemoTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
