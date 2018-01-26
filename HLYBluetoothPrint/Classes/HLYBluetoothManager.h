@@ -11,12 +11,14 @@
 
 typedef void (^HLYScanPeripheralsCompletionHandler)(NSArray<HLYBluetoothDevice *> *devices, NSError *error);
 typedef void (^HLYConnectedPeripheralCompletionHandler)(CBService *service, NSError *error);
-typedef void (^HLYAutoConnectedPeripheralCompletionHandler)(NSArray<HLYBluetoothDevice *> *devices, CBService *service, NSError *error);
+typedef void (^HLYPeripheralWriteCompletionHandler)(NSError *error);
 
 @interface HLYBluetoothManager : NSObject
 
 @property (nonatomic, readonly) BOOL isConnected;
 @property (nonatomic, readonly) NSString *stateMessage;
+@property (nonatomic, copy) HLYConnectedPeripheralCompletionHandler autoConnectionCompletionHandler;
+@property (nonatomic, copy) HLYPeripheralWriteCompletionHandler peripheralWriteCompletionHandler;
 
 + (instancetype)manager;
 
@@ -28,7 +30,5 @@ typedef void (^HLYAutoConnectedPeripheralCompletionHandler)(NSArray<HLYBluetooth
                 serviceID:(NSString *)serviceID
          characteristicID:(NSString *)characteristicID
         completionHandler:(HLYConnectedPeripheralCompletionHandler)completionHandler;
-
-- (void)autoConnectionPeripheralWithCompletionHandler:(HLYAutoConnectedPeripheralCompletionHandler)completionHandler;
 
 @end

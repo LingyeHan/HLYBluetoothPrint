@@ -57,6 +57,7 @@
 }
 
 - (void)connectWithDevice:(HLYBluetoothDevice *)device completionHandler:(void(^)(NSError *error))completionHandler {
+    
     [self connectPeripheral:device.peripheral
                   serviceID:device.serviceID
            characteristicID:device.characteristicID
@@ -67,32 +68,6 @@
     return [self.bluetoothManager isConnected];
 }
 
-- (void)autoConnectWithCompletionHandler:(HLYAutoConnectedPeripheralCompletionHandler)completionHandler {
-    
-    // 自动连接打印机
-    __weak typeof(self) wSelf = self;
-    [self.bluetoothManager autoConnectionPeripheralWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, CBService *service, NSError *error) {
- 
-        if (error) {
-            if (completionHandler) {
-                completionHandler(devices, service, error);
-            }
-            return;
-        }
-        
-        __strong typeof(wSelf) self = wSelf;
-        [self connectPeripheral:service.peripheral
-                      serviceID:nil
-               characteristicID:nil
-              completionHandler:^(NSError *error) {
-                  
-                  if (completionHandler) {
-                      completionHandler(devices, service, error);
-                  }
-              }];
-    }];
-}
-
 /**
  发送打印数据
  @param data 需要打印的数据
@@ -100,19 +75,44 @@
  */
 - (void)sendData:(NSData *)data completionHandler:(void(^)(NSError *error))completionHandler {
     
-    __weak typeof(self) wSelf = self;
-    [self autoConnectWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, CBService *service, NSError *error) {
-
-        __strong typeof(wSelf) self = wSelf;
-        if ([self.writeCharacteristics lastObject]) {
-            [self.peripheral writeValue:data forCharacteristic:[self.writeCharacteristics lastObject] type:CBCharacteristicWriteWithoutResponse];
-        } else if (error) {
-            if (completionHandler) {
-                completionHandler(error);
-            }
+    if (self.isConnected) {
+        if (self.writeCharacteristics.count > 0) {
+            [self.bluetoothManager setPeripheralWriteCompletionHandler:^(NSError *error) {
+                completionHandler ? completionHandler(error) : nil;
+            }];
+            [self.peripheral writeValue:data forCharacteristic:[self.writeCharacteristics lastObject] type:CBCharacteristicWriteWithResponse];
+        } else {
+             completionHandler ? completionHandler([NSError errorWithDomain:@"HLYBluetoothPrint" code:1 userInfo:@{NSLocalizedDescriptionKey : @"未找到蓝牙打印机特征码"}]) : nil;
         }
-     }];
+    } else {
+        // 设置自动打印机连接回调处理
+        __weak typeof(self) wSelf = self;
+        [self.bluetoothManager setAutoConnectionCompletionHandler:^(CBService *service, NSError *error) {
+            __strong typeof(wSelf) self = wSelf;
+            [self handleCharacteristicsForPeripheralWithService:service error:error completionHandler:^(NSError *error) {
+                if (error) {
+                    NSLog(@"自动连接打印机出错: %@", error);
+                    completionHandler ? completionHandler(error) : nil;
+                } else {
+                    NSLog(@"自动连接打印机完成");
+                    __strong typeof(wSelf) self = wSelf;
+                    [self sendData:data completionHandler:completionHandler];
+                }
+            }];
+        }];
+        // 扫描打印机且会自动连接
+        [self scanWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSError *error) {
+            if (error) {
+                NSLog(@"自动扫描打印机出错: %@", error);
+                completionHandler ? completionHandler(error) : nil;
+            } else {
+                NSLog(@"自动扫描打印机完成: %@", devices);
+            }
+        }];
+    }
 }
+
+
 
 #pragma mark - Private Method
 
@@ -142,19 +142,15 @@
                 [self.writeCharacteristics addObject:characteristic];
                 if (self.peripheral != service.peripheral) {
                     self.peripheral = service.peripheral;
-                    // 只到找到特征码才停止扫描
+                    // 只到找到打印机特征码才停止扫描
                     [self.bluetoothManager stopScanPeripheral];
-                }
-                if (completionHandler) {
-                    completionHandler(nil);
                 }
                 break;
             }
         }
-    } else {
-        if (completionHandler) {
-            completionHandler(error);
-        }
+    }
+    if (completionHandler) {
+        completionHandler(error);
     }
 }
 
