@@ -40,6 +40,19 @@
 
 - (void)scanWithCompletionHandler:(HLYScanPeripheralsCompletionHandler)completionHandler {
     
+    // 设置自动打印机连接回调处理
+    __weak typeof(self) wSelf = self;
+    [self.bluetoothManager setAutoConnectionCompletionHandler:^(CBService *service, NSError *error) {
+        __strong typeof(wSelf) self = wSelf;
+        [self handleCharacteristicsForPeripheralWithService:service error:error completionHandler:^(NSError *error) {
+            if (error) {
+                NSLog(@"自动连接打印机出错: %@", error);
+            } else {
+                NSLog(@"自动连接打印机完成");
+            }
+            self.autoConnectionCompletionHandler ? self.autoConnectionCompletionHandler(error) : nil;
+        }];
+    }];
     [self.bluetoothManager scanPeripheralsWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSError *error) {
         
         // 过滤掉不是打印机类型的设备
@@ -111,8 +124,6 @@
         }];
     }
 }
-
-
 
 #pragma mark - Private Method
 

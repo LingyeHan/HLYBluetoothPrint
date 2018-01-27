@@ -205,12 +205,13 @@
                     if (serviceUUIDs) {
                         obj.serviceID = ((NSUUID *)[serviceUUIDs lastObject]).UUIDString;
                         //obj.characteristicID = serviceUUIDs.count > 1 ? ((NSUUID *)serviceUUIDs[1]).UUIDString : nil;
-                    } else {
+//                    } else {
                         // 没找到 ServiceUUID 重扫描，直到找到 ServiceUUID 为止
 //                        [self scanPeripheralsWithCompletionHandler:self.scanPeripheralsCompletionHandler];
                     }
-                    
-                    // 自动连接
+                }
+                // 自动连接
+                if (obj.serviceID && (obj.peripheral.state != CBPeripheralStateConnected && obj.peripheral.state != CBPeripheralStateConnecting)) {
                     [self autoConnectionPeripheral:obj.peripheral serviceID:obj.serviceID];
                 }
                 *stop = YES;
@@ -279,6 +280,7 @@
                       serviceID:serviceID
                characteristicID:nil
               completionHandler:^(CBService *service, NSError *error) {
+                  __strong typeof(wSelf) self = wSelf;
 //                  if (error) {
 //                      NSLog(@"自动连接设备失败: %@", error);
 //                  } else {

@@ -24,8 +24,7 @@
     [super viewDidLoad];
     
     self.bluetoothPrinter = [HLYBluetoothPrinter printer];
-    [self autoConnect];
-//    [self scanPrinters];
+    [self scanPrinters];
 }
 
 - (IBAction)printButtonClicked:(UIButton *)sender {
@@ -76,24 +75,13 @@
     return dataWrapper.printerData;
 }
 
-- (void)autoConnect {
-    
-    __weak typeof(self) wSelf = self;
-    [self.bluetoothPrinter autoConnectWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, CBService *service, NSError *error) {
- 
-        __strong typeof(wSelf) self = wSelf;
-        if (error) {
-            [self showAlertWithTitle:@"蓝牙打印机" message:[NSString stringWithFormat:@"自动连接失败: %@", [error localizedDescription]]];
-        } else {
-            self.bluetoothDevices = devices;
-            [self.tableView reloadData];
-        }
-    }];
-}
-
 - (void)scanPrinters {
     
     __weak typeof(self) wSelf = self;
+    [self.bluetoothPrinter setAutoConnectionCompletionHandler:^(NSError *error) {
+        __strong typeof(wSelf) self = wSelf;
+        [self.tableView reloadData];
+    }];
     [self.bluetoothPrinter scanWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSError *error) {
         
         __strong typeof(wSelf) self = wSelf;
