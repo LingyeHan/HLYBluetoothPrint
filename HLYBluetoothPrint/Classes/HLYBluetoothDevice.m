@@ -19,6 +19,10 @@
     return self;
 }
 
+- (BOOL)isConnected {
+    return self.peripheral && self.peripheral.state == CBPeripheralStateConnected;
+}
+
 - (NSString *)stateStringValue {
     
     switch (self.peripheral.state) {

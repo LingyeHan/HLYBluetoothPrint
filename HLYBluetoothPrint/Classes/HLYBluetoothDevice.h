@@ -15,6 +15,7 @@
 @property (nonatomic, copy) CBPeripheral *peripheral;
 @property (nonatomic, copy) NSString *serviceID;
 @property (nonatomic, copy) NSString *characteristicID;
+@property (nonatomic, readonly, getter=isConnected) BOOL connected;
 
 - (instancetype)initWithPeripheral:(CBPeripheral *)peripheral RSSI:(NSNumber *)RSSI;
 

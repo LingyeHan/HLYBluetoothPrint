@@ -93,7 +93,8 @@
     
     [self.discoveredDevices removeAllObjects];
     self.scanPeripheralsCompletionHandler = completionHandler;
-    [self centralManager];
+    self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+//    [self centralManager];
 }
 
 - (void)connectPeripheral:(CBPeripheral *)peripheral
@@ -307,12 +308,12 @@
 
 #pragma mark - Getter Method
 
-- (CBCentralManager *)centralManager {
-    if (!_centralManager) {
-        _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
-    }
-    return _centralManager;
-}
+//- (CBCentralManager *)centralManager {
+//    if (!_centralManager) {
+//        _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+//    }
+//    return _centralManager;
+//}
 
 #pragma mark - Class Method
 

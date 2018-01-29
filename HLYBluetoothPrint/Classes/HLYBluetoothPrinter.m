@@ -53,6 +53,8 @@
             self.autoConnectionCompletionHandler ? self.autoConnectionCompletionHandler(error) : nil;
         }];
     }];
+    
+    __block BOOL isFound = NO;
     [self.bluetoothManager scanPeripheralsWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSError *error) {
         
         // 过滤掉不是打印机类型的设备
@@ -64,7 +66,15 @@
         }];
 
         if (completionHandler) {
-            completionHandler([printers copy], error);
+            if (printers.count > 0) {
+                isFound = YES;
+                completionHandler([printers copy], error);
+            } else {
+                // 扫描超时为 5 秒
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    isFound ? nil : completionHandler([printers copy], error);
+                });
+            }
         }
     }];
 }
