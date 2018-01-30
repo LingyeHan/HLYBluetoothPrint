@@ -65,7 +65,7 @@
                 isFound = YES;
                 completionHandler([printers copy], error);
             } else {
-                // 扫描超时为 5 秒
+                // 扫描超时为 5 秒回调
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     isFound ? nil : completionHandler([printers copy], error);
                 });
@@ -127,6 +127,12 @@
                 completionHandler ? completionHandler(error) : nil;
             } else {
                 NSLog(@"自动扫描打印机完成: %@", devices);
+                // 未找到或未连接上打印机，等待 5 秒后回调
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    if (!self.isConnected) {
+                        completionHandler ? completionHandler([NSError errorWithDomain:@"HLYBluetoothPrint" code:1 userInfo:@{NSLocalizedDescriptionKey : @"未扫描到打印机"}]) : nil;
+                    }
+                });
             }
         }];
     }
