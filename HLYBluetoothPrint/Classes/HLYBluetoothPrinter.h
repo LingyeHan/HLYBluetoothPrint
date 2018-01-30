@@ -21,6 +21,12 @@
 
 - (void)connectWithDevice:(HLYBluetoothDevice *)device completionHandler:(void(^)(NSError *error))completionHandler;
 
+/**
+ * 发送打印数据
+ *
+ * @param data 需要打印的数据
+ * @param completionHandler 打印完成回调
+ */
 - (void)sendData:(NSData *)data completionHandler:(void(^)(NSError *error))completionHandler;
 
 @end

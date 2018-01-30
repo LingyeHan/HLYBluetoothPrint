@@ -40,16 +40,11 @@
 
 - (void)scanWithCompletionHandler:(HLYScanPeripheralsCompletionHandler)completionHandler {
     
-    // 设置自动打印机连接回调处理
+    // 设置设备自动连接回调处理
     __weak typeof(self) wSelf = self;
     [self.bluetoothManager setAutoConnectionCompletionHandler:^(CBService *service, NSError *error) {
         __strong typeof(wSelf) self = wSelf;
         [self handleCharacteristicsForPeripheralWithService:service error:error completionHandler:^(NSError *error) {
-            if (error) {
-                NSLog(@"自动连接打印机出错: %@", error);
-            } else {
-                NSLog(@"自动连接打印机完成");
-            }
             self.autoConnectionCompletionHandler ? self.autoConnectionCompletionHandler(error) : nil;
         }];
     }];
@@ -92,38 +87,40 @@
 }
 
 /**
- 发送打印数据
- @param data 需要打印的数据
- @param completionHandler 打印完成回调
+ * 发送打印数据
+ *
+ * @param data 需要打印的数据
+ * @param completionHandler 打印完成回调
  */
 - (void)sendData:(NSData *)data completionHandler:(void(^)(NSError *error))completionHandler {
     
     if (self.isConnected) {
         if (self.writeCharacteristics.count > 0) {
+            // 设置写入打印机数据回调
             [self.bluetoothManager setPeripheralWriteCompletionHandler:^(NSError *error) {
                 completionHandler ? completionHandler(error) : nil;
             }];
+            NSLog(@"开始写入打印机数据...");
+//            completionHandler(nil);
             [self.peripheral writeValue:data forCharacteristic:[self.writeCharacteristics lastObject] type:CBCharacteristicWriteWithResponse];
         } else {
              completionHandler ? completionHandler([NSError errorWithDomain:@"HLYBluetoothPrint" code:1 userInfo:@{NSLocalizedDescriptionKey : @"未找到蓝牙打印机特征码"}]) : nil;
         }
-    } else {
-        // 设置自动打印机连接回调处理
+    } else { // 自动连接连接打印机
+        // 设置打印机自动连接回调处理
         __weak typeof(self) wSelf = self;
-        [self.bluetoothManager setAutoConnectionCompletionHandler:^(CBService *service, NSError *error) {
+        [self setAutoConnectionCompletionHandler:^(NSError *error) {
             __strong typeof(wSelf) self = wSelf;
-            [self handleCharacteristicsForPeripheralWithService:service error:error completionHandler:^(NSError *error) {
-                if (error) {
-                    NSLog(@"自动连接打印机出错: %@", error);
-                    completionHandler ? completionHandler(error) : nil;
-                } else {
-                    NSLog(@"自动连接打印机完成");
-                    __strong typeof(wSelf) self = wSelf;
-                    [self sendData:data completionHandler:completionHandler];
-                }
-            }];
+            if (error) {
+                NSLog(@"自动连接打印机出错: %@", error);
+                completionHandler ? completionHandler(error) : nil;
+            } else {
+                NSLog(@"自动连接打印机完成");
+                __strong typeof(wSelf) self = wSelf;
+                [self sendData:data completionHandler:completionHandler];
+            }
         }];
-        // 扫描打印机且会自动连接
+        // 开始扫描打印机，找到匹配的打印机会自动连接
         [self scanWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSError *error) {
             if (error) {
                 NSLog(@"自动扫描打印机出错: %@", error);
