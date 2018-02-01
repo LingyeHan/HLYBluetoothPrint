@@ -106,6 +106,10 @@
     [self appendText:text newLine:newLine alignment:HLYPrinterTextAlignmentLeft fontSize:HLYPrinterFontSizeSystem];
 }
 
+- (void)appendText:(NSString *)text newLine:(BOOL)newLine alignment:(HLYPrinterTextAlignment)alignment {
+    [self appendText:text newLine:newLine alignment:alignment fontSize:HLYPrinterFontSizeSystem];
+}
+
 - (void)appendText:(NSString *)text newLine:(BOOL)newLine alignment:(HLYPrinterTextAlignment)alignment fontSize:(HLYPrinterFontSize)fontSize {
     
     [self setAlignment:alignment];
@@ -122,6 +126,10 @@
     [self appendTitle:title value:value fontSize:HLYPrinterFontSizeSystem];
 }
 
+- (void)appendTitle:(NSString *)title value:(NSString *)value alignment:(HLYPrinterTextAlignment)alignment {
+    [self appendTitle:title value:value offset:0 fontSize:HLYPrinterFontSizeSystem alignment:alignment];
+}
+
 - (void)appendTitle:(NSString *)title value:(NSString *)value fontSize:(HLYPrinterFontSize)fontSize {
     [self appendTitle:title value:value offset:0 fontSize:fontSize];
 }
@@ -131,8 +139,12 @@
 }
 
 - (void)appendTitle:(NSString *)title value:(NSString *)value offset:(NSInteger)offset fontSize:(HLYPrinterFontSize)fontSize {
+    [self appendTitle:title value:value offset:offset fontSize:fontSize alignment:HLYPrinterTextAlignmentLeft];
+}
+
+- (void)appendTitle:(NSString *)title value:(NSString *)value offset:(NSInteger)offset fontSize:(HLYPrinterFontSize)fontSize alignment:(HLYPrinterTextAlignment)alignment {
     
-    [self setAlignment:HLYPrinterTextAlignmentLeft];
+    [self setAlignment:alignment];
     [self setFontSize:fontSize];
     [self appendText:title newLine:NO];
     if (offset > 0) {
@@ -154,16 +166,17 @@
     
     NSInteger offset = isTitle ? 0 : 10;
     if (leftText) {
-        [self appendText:leftText maxChar:10];
+        [self appendText:leftText maxChar:8];
     }
     
     if (middleText) {
-        [self setOffset:150 + offset];
+        [self setOffset:245 + offset];
         [self appendText:middleText newLine:NO];
     }
     
     if (rightText) {
-        [self setOffset:300 + offset];
+//        [self setOffset:350 + offset];
+        [self setOffsetText:rightText];
         [self appendText:rightText newLine:NO];
     }
     
@@ -178,16 +191,17 @@
  */
 - (void)appendText:(NSString *)text maxChar:(NSInteger)maxCount {
     
-    NSStringEncoding encoding = HLYPrinterStringEncodingGB_18030_2000();
-    NSData *data = [text dataUsingEncoding:encoding];
-    if (data.length > maxCount) {
-        data = [data subdataWithRange:NSMakeRange(0, maxCount)];
-        text = [[NSString alloc] initWithData:data encoding:encoding];
-        if (!text) {
-            data = [data subdataWithRange:NSMakeRange(0, maxCount - 1)];
-            text = [[NSString alloc] initWithData:data encoding:encoding];
-        }
-        text = [text stringByAppendingString:@"..."];
+//    NSStringEncoding encoding = HLYPrinterStringEncodingGB_18030_2000();
+//    NSData *data = [text dataUsingEncoding:encoding];
+    if (text.length >= maxCount) {
+//        data = [data subdataWithRange:NSMakeRange(0, maxCount)];
+//        text = [[NSString alloc] initWithData:data encoding:encoding];
+//        if (!text) {
+//            data = [data subdataWithRange:NSMakeRange(0, maxCount - 1)];
+//            text = [[NSString alloc] initWithData:data encoding:encoding];
+//        }
+//        text = [text stringByAppendingString:@"..."];
+        text = [text stringByReplacingCharactersInRange:NSMakeRange(maxCount, text.length-maxCount) withString:@"..."];
     }
     [self appendText:text newLine:NO];
 }
@@ -205,10 +219,10 @@
     NSInteger textWidth = attrString.size.width;
 
     // 2.设置偏移量
-    [self setOffset:368 - textWidth];
+    [self setOffset:378 - textWidth];
 
     // 3.设置文字
-    [self appendText:text];
+//    [self appendText:text];
 }
 
 /**

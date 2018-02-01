@@ -74,6 +74,10 @@
     }];
 }
 
+- (void)stopScanPrinter {
+    [self.bluetoothManager stopScanPeripheral];
+}
+
 - (void)connectWithDevice:(HLYBluetoothDevice *)device completionHandler:(void(^)(NSError *error))completionHandler {
     
     [self connectPeripheral:device.peripheral
@@ -94,6 +98,7 @@
  */
 - (void)sendData:(NSData *)data completionHandler:(void(^)(NSError *error))completionHandler {
     
+    // 检查打印机是否已连接
     if (self.isConnected) {
         if (self.writeCharacteristics.count > 0) {
             // 设置写入打印机数据回调
@@ -106,7 +111,7 @@
         } else {
              completionHandler ? completionHandler([NSError errorWithDomain:@"HLYBluetoothPrint" code:1 userInfo:@{NSLocalizedDescriptionKey : @"未找到蓝牙打印机特征码"}]) : nil;
         }
-    } else { // 自动连接连接打印机
+    } else { // 自动连接打印机
         // 设置打印机自动连接回调处理
         __weak typeof(self) wSelf = self;
         [self setAutoConnectionCompletionHandler:^(NSError *error) {

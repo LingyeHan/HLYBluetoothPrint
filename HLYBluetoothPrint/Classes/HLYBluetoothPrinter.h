@@ -19,6 +19,8 @@
 
 - (void)scanWithCompletionHandler:(HLYScanPeripheralsCompletionHandler)completionHandler;
 
+- (void)stopScanPrinter;
+
 - (void)connectWithDevice:(HLYBluetoothDevice *)device completionHandler:(void(^)(NSError *error))completionHandler;
 
 /**

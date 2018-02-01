@@ -97,6 +97,8 @@ typedef NS_ENUM(NSInteger, HLYPrinterFontStyle) {
 
 - (void)appendTitle:(NSString *)title value:(NSString *)value;
 
+- (void)appendTitle:(NSString *)title value:(NSString *)value alignment:(HLYPrinterTextAlignment)alignment;
+
 /**
  * 添加文本
  *
