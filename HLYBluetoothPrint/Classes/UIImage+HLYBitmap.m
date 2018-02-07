@@ -6,6 +6,7 @@
 //
 
 #import "UIImage+HLYBitmap.h"
+#import "HLYBluetoothPrint.h"
 
 @implementation UIImage (HLYBitmap)
 

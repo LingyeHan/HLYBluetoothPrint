@@ -6,7 +6,7 @@
 //
 
 #import "HLYBluetoothManager.h"
-#import "HLYBluetoothDevice.h"
+#import "HLYBluetoothPrint.h"
 
 @interface HLYBluetoothManager () <CBCentralManagerDelegate, CBPeripheralManagerDelegate, CBPeripheralDelegate>
 

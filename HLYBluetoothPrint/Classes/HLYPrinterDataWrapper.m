@@ -187,20 +187,11 @@
  *  添加文字，不换行
  *
  *  @param text    文字内容
- *  @param maxCount 最多可以允许多少个字节,后面加...
+ *  @param maxCount 最多可以允许多少个字符, 超过后面加"..."
  */
 - (void)appendText:(NSString *)text maxChar:(NSInteger)maxCount {
     
-//    NSStringEncoding encoding = HLYPrinterStringEncodingGB_18030_2000();
-//    NSData *data = [text dataUsingEncoding:encoding];
     if (text.length >= maxCount) {
-//        data = [data subdataWithRange:NSMakeRange(0, maxCount)];
-//        text = [[NSString alloc] initWithData:data encoding:encoding];
-//        if (!text) {
-//            data = [data subdataWithRange:NSMakeRange(0, maxCount - 1)];
-//            text = [[NSString alloc] initWithData:data encoding:encoding];
-//        }
-//        text = [text stringByAppendingString:@"..."];
         text = [text stringByReplacingCharactersInRange:NSMakeRange(maxCount, text.length-maxCount) withString:@"..."];
     }
     [self appendText:text newLine:NO];
@@ -228,12 +219,12 @@
 /**
  *  设置偏移量
  *
- *  @param offset 偏移量
+ *  @param offset 偏移量 用点数计算=(nH*256+nL)*0.125mm
  */
 - (void)setOffset:(NSInteger)offset {
-    NSInteger remainder = offset % 256;
-    NSInteger consult = offset / 256;
-    Byte spaceBytes[] = {0x1B, 0x24, remainder, consult};
+    NSInteger nL = offset % 256;//低位
+    NSInteger nH = offset / 256;//高位
+    Byte spaceBytes[] = {0x1B, 0x24, nL, nH};
     [self.data appendBytes:spaceBytes length:sizeof(spaceBytes)];
 }
 

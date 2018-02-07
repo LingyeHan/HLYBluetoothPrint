@@ -6,7 +6,7 @@
 //
 
 #import "HLYBluetoothPrinter.h"
-#import "HLYBluetoothManager.h"
+#import "HLYBluetoothPrint.h"
 
 @interface HLYBluetoothPrinter ()
 
@@ -74,7 +74,7 @@
     }];
 }
 
-- (void)stopScanPrinter {
+- (void)stopScan {
     [self.bluetoothManager stopScanPeripheral];
 }
 
