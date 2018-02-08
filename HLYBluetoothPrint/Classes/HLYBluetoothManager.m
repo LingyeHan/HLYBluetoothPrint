@@ -19,6 +19,7 @@
 
 @property (nonatomic, copy) HLYScanPeripheralsCompletionHandler scanPeripheralsCompletionHandler;
 @property (nonatomic, copy) HLYConnectedPeripheralCompletionHandler connectedPeripheralCompletionHandler;
+@property (nonatomic, copy) void(^disconnectCompletionHandler)(NSError *error);
 @property (nonatomic, strong) NSMutableArray<HLYBluetoothDevice *> *discoveredDevices;
 
 @property (nonatomic, strong) CBPeripheral *connectedPeripheral;
@@ -50,7 +51,7 @@
     return self;
 }
 
-#pragma mark - Public Mothod
+#pragma mark - Public Method
 
 - (BOOL)isConnected {
     
@@ -93,8 +94,7 @@
     
     [self.discoveredDevices removeAllObjects];
     self.scanPeripheralsCompletionHandler = completionHandler;
-    self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
-//    [self centralManager];
+    self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:@{CBCentralManagerOptionShowPowerAlertKey : [NSNumber numberWithBool:YES]}];
 }
 
 - (void)connectPeripheral:(CBPeripheral *)peripheral
@@ -127,6 +127,17 @@
     });
 }
 
+- (void)disconnectPeripheralConnection:(CBPeripheral *)peripheral completionHandler:(void(^)(NSError *error))completionHandler {
+    
+    if (!peripheral) {
+        return;
+    }
+    
+    self.disconnectCompletionHandler = completionHandler;
+    [self cancelPeripheralConnection:peripheral];
+    [HLYBluetoothManager removeRecentConnectionPeripheral];
+}
+
 - (void)cancelPeripheralConnection:(CBPeripheral *)peripheral {
     
     if (!peripheral) {
@@ -151,14 +162,12 @@
  * 中央设备状态改变
  */
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
-    
+
+    [self bluetoothAvailable:central.state == CBCentralManagerStatePoweredOn];
     if (central.state == CBCentralManagerStatePoweredOn) {
         [self.centralManager scanForPeripheralsWithServices:nil options:nil];
-    } else {
-        if (self.scanPeripheralsCompletionHandler) {
-            self.scanPeripheralsCompletionHandler(nil, [NSError errorWithDomain:@"HLYBluetoothPeripheral" code:1 userInfo:@{NSLocalizedDescriptionKey : @"设备蓝牙未打开"}]);
-        }
     }
+//    self.bluetoothStateUpdateBlock ? self.bluetoothStateUpdateBlock(peripheral.state) : nil;
 }
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
@@ -172,6 +181,8 @@
 
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(nonnull CBPeripheral *)peripheral error:(nullable NSError *)error {
     NSLog(@"蓝牙设备已断开连接: %@", peripheral);
+    
+    self.disconnectCompletionHandler ? self.disconnectCompletionHandler(error) : nil;
     
     // 设备断开重连
 //    [self connectPeripheral:self.connectedPeripheral
@@ -291,6 +302,13 @@
                       self.autoConnectionCompletionHandler(service, error);
                   }
               }];
+    }
+}
+
+- (void)bluetoothAvailable:(BOOL)available {
+    if (self.bluetoothAvailableCompletionHandler) {
+        self.bluetoothAvailableCompletionHandler(available);
+//        self.bluetoothAvailableCompletionHandler = NULL;
     }
 }
 

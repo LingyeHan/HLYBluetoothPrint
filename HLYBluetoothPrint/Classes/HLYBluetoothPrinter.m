@@ -38,6 +38,10 @@
     return self;
 }
 
+- (void)setBluetoothAvailableCompletionHandler:(HLYBluetoothAvailableCompletionHandler)bluetoothAvailableCompletionHandler {
+    self.bluetoothManager.bluetoothAvailableCompletionHandler = bluetoothAvailableCompletionHandler;
+}
+
 - (void)scanWithCompletionHandler:(HLYScanPeripheralsCompletionHandler)completionHandler {
     
     // 设置设备自动连接回调处理
@@ -49,8 +53,13 @@
         }];
     }];
     
-    __block BOOL isFound = NO;
+    __block BOOL isCallbackCompleted = NO;
     [self.bluetoothManager scanPeripheralsWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSError *error) {
+        
+        if (error) {
+            completionHandler ? completionHandler(nil, error) : nil;
+            return;
+        }
         
         // 过滤掉不是打印机类型的设备
         NSMutableArray<HLYBluetoothDevice *> *printers = [NSMutableArray array];
@@ -62,12 +71,14 @@
 
         if (completionHandler) {
             if (printers.count > 0) {
-                isFound = YES;
+                isCallbackCompleted = YES;
                 completionHandler([printers copy], error);
             } else {
                 // 扫描超时为 5 秒回调
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    isFound ? nil : completionHandler([printers copy], error);
+                    if (!isCallbackCompleted) {
+                        completionHandler([printers copy], error);
+                    }
                 });
             }
         }
@@ -84,6 +95,11 @@
                   serviceID:device.serviceID
            characteristicID:device.characteristicID
           completionHandler:completionHandler];
+}
+
+- (void)disconnectWithDevice:(HLYBluetoothDevice *)device completionHandler:(void(^)(NSError *error))completionHandler {
+    
+    [self.bluetoothManager disconnectPeripheralConnection:device.peripheral completionHandler:completionHandler];
 }
 
 - (BOOL)isConnected {
@@ -125,17 +141,27 @@
                 [self sendData:data completionHandler:completionHandler];
             }
         }];
-        // 开始扫描打印机，找到匹配的打印机会自动连接
+        
+        // 开始扫描打印机，找到匹配的打印机会自动连接 (注意: 因为在扫描中，会存在无限回调)
+        __block BOOL isCallbackCompleted = NO;
         [self scanWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSError *error) {
             if (error) {
                 NSLog(@"自动扫描打印机出错: %@", error);
-                completionHandler ? completionHandler(error) : nil;
+                [self stopScan];
+                if (!isCallbackCompleted) {//剔除多次回调
+                    isCallbackCompleted = YES;
+                    completionHandler ? completionHandler(error) : nil;
+                }
             } else {
                 NSLog(@"自动扫描打印机完成: %@", devices);
                 // 未找到或未连接上打印机，等待 5 秒后回调
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     if (!self.isConnected) {
-                        completionHandler ? completionHandler([NSError errorWithDomain:@"HLYBluetoothPrint" code:1 userInfo:@{NSLocalizedDescriptionKey : @"未扫描到打印机"}]) : nil;
+                        [self stopScan];
+                        if (!isCallbackCompleted) {//剔除多次回调
+                            isCallbackCompleted = YES;
+                            completionHandler ? completionHandler([NSError errorWithDomain:@"HLYBluetoothPrint" code:1 userInfo:@{NSLocalizedDescriptionKey : devices.count > 0 ? @"未连接打印机" : @"未扫描到打印机"}]) : nil;
+                        }
                     }
                 });
             }
@@ -172,7 +198,7 @@
                 if (self.peripheral != service.peripheral) {
                     self.peripheral = service.peripheral;
                     // 只到找到打印机特征码才停止扫描
-                    [self.bluetoothManager stopScanPeripheral];
+                    [self stopScan];
                 }
                 break;
             }

@@ -28,11 +28,11 @@
     switch (self.peripheral.state) {
         case CBPeripheralStateDisconnected:
             return @"未连接";
-        case  CBPeripheralStateConnecting:
+        case CBPeripheralStateConnecting:
             return @"连接中";
-        case  CBPeripheralStateConnected:
+        case CBPeripheralStateConnected:
             return @"已连接";
-        case  CBPeripheralStateDisconnecting:
+        case CBPeripheralStateDisconnecting:
             return @"断开中";
             
         default:
