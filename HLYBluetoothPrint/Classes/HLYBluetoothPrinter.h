@@ -10,6 +10,8 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import <HLYBluetoothPrint/HLYBluetoothManager.h>
 
+@class HLYBluetoothDevice;
+
 @interface HLYBluetoothPrinter : NSObject
 
 @property (nonatomic, readonly) BOOL isConnected;

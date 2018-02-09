@@ -11,7 +11,7 @@
     #define NSLog(...)
 #endif
 
-#import <HLYBluetoothPrint/HLYPrinterDataWrapper.h>
 #import <HLYBluetoothPrint/HLYBluetoothDevice.h>
+#import <HLYBluetoothPrint/HLYPrinterDataWrapper.h>
 #import <HLYBluetoothPrint/HLYBluetoothManager.h>
 #import <HLYBluetoothPrint/HLYBluetoothPrinter.h>

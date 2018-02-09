@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "HLYBluetoothPrint"
-  s.version          = "0.0.3"
+  s.version          = "0.0.4"
   s.summary          = "A common bluetooth Print Kit used on iOS."
   s.description      = <<-DESC
                        It is a common bluetooth Print Kit used on iOS, which implement by Objective-C.
@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   # s.ios.deployment_target = '8.0'
   # s.osx.deployment_target = '10.9'
   s.requires_arc = true
-  s.public_header_files = 'HLYBluetoothPrint/*.h'
-  s.source_files = 'HLYBluetoothPrint/**/*'
+  s.public_header_files = 'HLYBluetoothPrint/Classes/*.h'
+  s.source_files = 'HLYBluetoothPrint/Classes/*.{h,m}'
   # s.resources = 'Assets'
 
   # s.ios.exclude_files = 'Classes/osx'

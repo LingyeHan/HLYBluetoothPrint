@@ -6,7 +6,7 @@
 //
 
 #import "HLYBluetoothPrinter.h"
-#import "HLYBluetoothPrint.h"
+#import "HLYBluetoothDevice.h"
 
 @interface HLYBluetoothPrinter ()
 
@@ -49,6 +49,7 @@
     [self.bluetoothManager setAutoConnectionCompletionHandler:^(CBService *service, NSError *error) {
         __strong typeof(wSelf) self = wSelf;
         [self handleCharacteristicsForPeripheralWithService:service error:error completionHandler:^(NSError *error) {
+            __strong typeof(wSelf) self = wSelf;
             self.autoConnectionCompletionHandler ? self.autoConnectionCompletionHandler(error) : nil;
         }];
     }];
@@ -137,7 +138,6 @@
                 completionHandler ? completionHandler(error) : nil;
             } else {
                 NSLog(@"自动连接打印机完成");
-                __strong typeof(wSelf) self = wSelf;
                 [self sendData:data completionHandler:completionHandler];
             }
         }];
@@ -145,6 +145,7 @@
         // 开始扫描打印机，找到匹配的打印机会自动连接 (注意: 因为在扫描中，会存在无限回调)
         __block BOOL isCallbackCompleted = NO;
         [self scanWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSError *error) {
+            __strong typeof(wSelf) self = wSelf;
             if (error) {
                 NSLog(@"自动扫描打印机出错: %@", error);
                 [self stopScan];
