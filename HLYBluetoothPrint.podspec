@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "HLYBluetoothPrint"
-  s.version          = "0.0.4"
+  s.version          = "0.0.5"
   s.summary          = "A common bluetooth Print Kit used on iOS."
   s.description      = <<-DESC
                        It is a common bluetooth Print Kit used on iOS, which implement by Objective-C.
