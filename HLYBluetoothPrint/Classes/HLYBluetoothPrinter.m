@@ -62,12 +62,12 @@
             return;
         }
         
-        // 过滤掉不是打印机类型的设备
         NSMutableArray<HLYBluetoothDevice *> *printers = [NSMutableArray array];
         [devices enumerateObjectsUsingBlock:^(HLYBluetoothDevice * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (obj.serviceID) {
+            // 过滤掉不是打印机类型的设备
+//            if (obj.serviceID) {
                 [printers addObject:obj];
-            }
+//            }
         }];
 
         if (completionHandler) {
@@ -155,10 +155,11 @@
                 }
             } else {
                 NSLog(@"自动扫描打印机完成: %@", devices);
-                // 未找到或未连接上打印机，等待 5 秒后回调
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                // 未找到或未连接上打印机，等待 10 秒后回调
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    
+                    [self stopScan];
                     if (!self.isConnected) {
-                        [self stopScan];
                         if (!isCallbackCompleted) {//剔除多次回调
                             isCallbackCompleted = YES;
                             completionHandler ? completionHandler([NSError errorWithDomain:@"HLYBluetoothPrint" code:1 userInfo:@{NSLocalizedDescriptionKey : devices.count > 0 ? @"未连接打印机" : @"未扫描到打印机"}]) : nil;

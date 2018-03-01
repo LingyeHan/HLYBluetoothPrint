@@ -115,6 +115,7 @@
         [self cancelPeripheralConnection:self.connectedPeripheral];
     }
     
+    [HLYBluetoothManager setRecentConnectionPeripheralUUID:peripheral.identifier.UUIDString];
     self.serviceID = serviceID;
     self.characteristicID = characteristicID;
     self.connectedPeripheral = peripheral;
@@ -155,6 +156,10 @@
 
 - (void)stopScanPeripheral {
     [self.centralManager stopScan];
+}
+
+- (void)cancelCurrentConnection {
+    [self cancelPeripheralConnection:self.connectedPeripheral];
 }
 
 #pragma mark - CBCentralManagerDelegate
@@ -217,10 +222,6 @@
                     NSArray *serviceUUIDs = [advertisementData objectForKey:@"kCBAdvDataServiceUUIDs"];
                     if (serviceUUIDs) {
                         obj.serviceID = ((NSUUID *)[serviceUUIDs lastObject]).UUIDString;
-                        //obj.characteristicID = serviceUUIDs.count > 1 ? ((NSUUID *)serviceUUIDs[1]).UUIDString : nil;
-//                    } else {
-                        // 没找到 ServiceUUID 重扫描，直到找到 ServiceUUID 为止
-//                        [self scanPeripheralsWithCompletionHandler:self.scanPeripheralsCompletionHandler];
                     }
                 }
                 // 自动连接
@@ -264,7 +265,7 @@
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error {
     
-    [HLYBluetoothManager setRecentConnectionPeripheralUUID:peripheral.identifier.UUIDString];
+//    [HLYBluetoothManager setRecentConnectionPeripheralUUID:peripheral.identifier.UUIDString];
     self.connectedPeripheralCompletionHandler(service, error);
 }
 
@@ -273,6 +274,7 @@
         NSLog(@"设备写入失败: %@", error);
     } else {
         NSLog(@"设备写入完成");
+//        [self cancelPeripheralConnection:peripheral];
     }
     if (self.peripheralWriteCompletionHandler) {
         self.peripheralWriteCompletionHandler(error);
@@ -315,6 +317,9 @@
 
 - (void)connectTimeout {
     
+    if (!self.connectedPeripheral) {
+        return;
+    }
     if (self.isConnected) {
         return;
     }

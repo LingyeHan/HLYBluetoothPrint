@@ -30,6 +30,8 @@ typedef void (^HLYPeripheralWriteCompletionHandler)(NSError *error);
 
 - (void)stopScanPeripheral;
 
+- (void)cancelCurrentConnection;
+
 - (void)connectPeripheral:(CBPeripheral *)peripheral
                 serviceID:(NSString *)serviceID
          characteristicID:(NSString *)characteristicID
