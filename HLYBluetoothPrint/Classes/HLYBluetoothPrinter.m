@@ -12,12 +12,12 @@
 
 @property (nonatomic, strong) HLYBluetoothManager *bluetoothManager;
 @property (nonatomic, strong) CBPeripheral *peripheral;
-@property (nonatomic, strong) NSMutableArray<CBCharacteristic *> *writeCharacteristics;
+
 
 @end
 
 @implementation HLYBluetoothPrinter
-
+/*
 + (instancetype)printer {
     
     static HLYBluetoothPrinter *printer = nil;
@@ -107,17 +107,12 @@
     return [self.bluetoothManager isConnected];
 }
 
-/**
- * 发送打印数据
- *
- * @param data 需要打印的数据
- * @param completionHandler 打印完成回调
- */
 - (void)sendData:(NSData *)data completionHandler:(void(^)(NSError *error))completionHandler {
-    
+
     // 检查打印机是否已连接
     if (self.isConnected) {
         if (self.writeCharacteristics.count > 0) {
+            NSLog(@"特征码: %@", self.writeCharacteristics);
             // 设置写入打印机数据回调
             [self.bluetoothManager setPeripheralWriteCompletionHandler:^(NSError *error) {
                 completionHandler ? completionHandler(error) : nil;
@@ -129,6 +124,7 @@
              completionHandler ? completionHandler([NSError errorWithDomain:@"HLYBluetoothPrint" code:1 userInfo:@{NSLocalizedDescriptionKey : @"未找到蓝牙打印机特征码"}]) : nil;
         }
     } else { // 自动连接打印机
+        
         // 设置打印机自动连接回调处理
         __weak typeof(self) wSelf = self;
         [self setAutoConnectionCompletionHandler:^(NSError *error) {
@@ -155,6 +151,7 @@
                 }
             } else {
                 NSLog(@"自动扫描打印机完成: %@", devices);
+//                [self.bluetoothManager autoConnect];
                 // 未找到或未连接上打印机，等待 10 秒后回调
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     
@@ -168,6 +165,7 @@
                 });
             }
         }];
+ 
     }
 }
 
@@ -199,10 +197,10 @@
                 [self.writeCharacteristics addObject:characteristic];
                 if (self.peripheral != service.peripheral) {
                     self.peripheral = service.peripheral;
-                    // 只到找到打印机特征码才停止扫描
-                    [self stopScan];
+//                    // 只到找到打印机特征码才停止扫描
+//                    [self stopScan];
                 }
-                break;
+//                break;
             }
         }
     }
@@ -210,5 +208,5 @@
         completionHandler(error);
     }
 }
-
+*/
 @end

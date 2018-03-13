@@ -13,7 +13,7 @@
 @class HLYBluetoothDevice;
 
 @interface HLYBluetoothPrinter : NSObject
-
+/*
 @property (nonatomic, readonly) BOOL isConnected;
 @property (nonatomic, copy) HLYBluetoothAvailableCompletionHandler bluetoothAvailableCompletionHandler;
 @property (nonatomic, copy) void(^autoConnectionCompletionHandler)(NSError *error);
@@ -28,12 +28,7 @@
 
 - (void)disconnectWithDevice:(HLYBluetoothDevice *)device completionHandler:(void(^)(NSError *error))completionHandler;
 
-/**
- * 发送打印数据
- *
- * @param data 需要打印的数据
- * @param completionHandler 打印完成回调
- */
-- (void)sendData:(NSData *)data completionHandler:(void(^)(NSError *error))completionHandler;
 
+- (void)sendData:(NSData *)data completionHandler:(void(^)(NSError *error))completionHandler;
+*/
 @end

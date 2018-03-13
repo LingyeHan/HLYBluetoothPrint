@@ -10,21 +10,19 @@
 
 @class HLYBluetoothDevice;
 
-typedef void (^HLYBluetoothAvailableCompletionHandler)(BOOL available);
 typedef void (^HLYScanPeripheralsCompletionHandler)(NSArray<HLYBluetoothDevice *> *devices, NSError *error);
-typedef void (^HLYConnectedPeripheralCompletionHandler)(CBService *service, NSError *error);
-typedef void (^HLYPeripheralWriteCompletionHandler)(NSError *error);
 
 @interface HLYBluetoothManager : NSObject
 
+// CBCentralManager 的创建是异步的，如果初始化完成之后没有被当前创建它的类所持有，就会在下一次 RunLoop 迭代的时候释放。
+// 当然 CBCentralManager 实例如果不是在 ViewController 中创建的，那么持有 CBCentralManager 的这个类在初始化之后也必须被 ViewController 持有，否则控制台会有如下的错误输出：[CoreBluetooth] XPC connection invalid
+//@property (nonatomic, strong) UIViewController *viewController;
 @property (nonatomic, readonly) BOOL isConnected;
 @property (nonatomic, readonly) NSString *stateMessage;
-@property (nonatomic, copy) HLYBluetoothAvailableCompletionHandler bluetoothAvailableCompletionHandler;
-//@property (nonatomic, copy) HLYBluetoothStateUpdateBlock bluetoothStateUpdateBlock;
-@property (nonatomic, copy) HLYConnectedPeripheralCompletionHandler autoConnectionCompletionHandler;
-@property (nonatomic, copy) HLYPeripheralWriteCompletionHandler peripheralWriteCompletionHandler;
 
 + (instancetype)manager;
+
+- (void)checkBluetoothWithCompletionHandler:(void(^)(BOOL isPoweredOn))completionHandler;
 
 - (void)scanPeripheralsWithCompletionHandler:(HLYScanPeripheralsCompletionHandler)completionHandler;
 
@@ -32,11 +30,17 @@ typedef void (^HLYPeripheralWriteCompletionHandler)(NSError *error);
 
 - (void)cancelCurrentConnection;
 
+- (void)autoConnectPeripheralWithServiceID:(NSString *)serviceID
+                          characteristicID:(NSString *)characteristicID
+                         completionHandler:(void (^)(NSError *))completionHandler;
+
 - (void)connectPeripheral:(CBPeripheral *)peripheral
                 serviceID:(NSString *)serviceID
          characteristicID:(NSString *)characteristicID
-        completionHandler:(HLYConnectedPeripheralCompletionHandler)completionHandler;
+        completionHandler:(void(^)(NSError *error))completionHandler;
 
 - (void)disconnectPeripheralConnection:(CBPeripheral *)peripheral completionHandler:(void(^)(NSError *error))completionHandler;
+
+- (void)writeValue:(NSData *)data completionHandler:(void(^)(NSError *error))completionHandler;
 
 @end
