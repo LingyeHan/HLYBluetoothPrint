@@ -14,4 +14,3 @@
 #import <HLYBluetoothPrint/HLYBluetoothDevice.h>
 #import <HLYBluetoothPrint/HLYPrinterDataWrapper.h>
 #import <HLYBluetoothPrint/HLYBluetoothManager.h>
-#import <HLYBluetoothPrint/HLYBluetoothPrinter.h>
