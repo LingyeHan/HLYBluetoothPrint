@@ -18,6 +18,7 @@ typedef void (^HLYScanPeripheralsCompletionHandler)(NSArray<HLYBluetoothDevice *
 // 当然 CBCentralManager 实例如果不是在 ViewController 中创建的，那么持有 CBCentralManager 的这个类在初始化之后也必须被 ViewController 持有，否则控制台会有如下的错误输出：[CoreBluetooth] XPC connection invalid
 //@property (nonatomic, strong) UIViewController *viewController;
 @property (nonatomic, readonly) BOOL isConnected;
+@property (nonatomic, readonly) BOOL hasConnectedPrinter;
 @property (nonatomic, readonly) NSString *stateMessage;
 
 + (instancetype)manager;

@@ -71,6 +71,10 @@ typedef NS_ENUM(NSInteger, HLYBluetoothTimeoutType) {
 
 #pragma mark - Public Method
 
+- (BOOL)hasConnectedPrinter {
+    return [self.class getRecentConnectionPeripheraUUID] != nil;
+}
+
 - (void)checkBluetoothWithCompletionHandler:(void (^)(BOOL))completionHandler {
     
     self.checkBluetoothWithCompletionHandler = completionHandler;
@@ -420,7 +424,9 @@ typedef NS_ENUM(NSInteger, HLYBluetoothTimeoutType) {
     self.disconnectCompletionHandler ? self.disconnectCompletionHandler(error) : nil;
     
     // 设备断开重连
-    [self.centralManager connectPeripheral:peripheral options:nil];
+    if (self.hasConnectedPrinter) {
+        [self.centralManager connectPeripheral:peripheral options:nil];
+    }
 }
 
 //- (void)centralManager:(CBCentralManager *)central willRestoreState:(NSDictionary<NSString *,id> *)dict {
