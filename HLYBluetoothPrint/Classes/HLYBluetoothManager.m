@@ -25,7 +25,6 @@ typedef NS_ENUM(NSInteger, HLYBluetoothTimeoutType) {
 @property (nonatomic, copy) void(^peripheralWriteCompletionHandler)(NSError *error);
 @property (nonatomic, copy) void(^autoConnectedPeripheralCompletionHandler)(NSError *error);
 @property (nonatomic, copy) void(^connectedPeripheralCompletionHandler)(NSError *error);
-@property (nonatomic, copy) void(^disconnectCompletionHandler)(NSError *error);
 
 @property (nonatomic, strong) NSString *serviceID;
 @property (nonatomic, strong) NSString *characteristicID;
@@ -204,7 +203,7 @@ typedef NS_ENUM(NSInteger, HLYBluetoothTimeoutType) {
     }
 
     [self.centralManager connectPeripheral:peripheral options:nil];//@{CBConnectPeripheralOptionNotifyOnDisconnectionKey:@(YES)}
-    //    [self.centralManager retrievePeripheralsWithIdentifiers:<#(nonnull NSArray<NSUUID *> *)#>];//
+    //    [self.centralManager retrievePeripheralsWithIdentifiers:(nonnull NSArray<NSUUID *> *)];//
 }
 
 - (void)disconnectPeripheralConnection:(CBPeripheral *)peripheral completionHandler:(void(^)(NSError *error))completionHandler {

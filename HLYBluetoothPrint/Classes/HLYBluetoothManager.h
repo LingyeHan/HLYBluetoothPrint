@@ -20,6 +20,7 @@ typedef void (^HLYScanPeripheralsCompletionHandler)(NSArray<HLYBluetoothDevice *
 @property (nonatomic, readonly) BOOL isConnected;
 @property (nonatomic, readonly) BOOL hasConnectedPrinter;
 @property (nonatomic, readonly) NSString *stateMessage;
+@property (nonatomic, copy) void(^disconnectCompletionHandler)(NSError *error);
 
 + (instancetype)manager;
 
