@@ -199,7 +199,7 @@
 				TargetAttributes = {
 					695ED49220087CE80010A3B9 = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					695ED4AA20087CE80010A3B9 = {
 						CreatedOnToolsVersion = 9.2;
@@ -443,13 +443,14 @@
 			baseConfigurationReference = 3A9DC33B43879BE8A6B2FB27 /* Pods-HLYBluetoothPrintDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CY4833TA98;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = XZJYP6FM9P;
 				INFOPLIST_FILE = HLYBluetoothPrintDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yiyuan.HLYBluetoothPrintDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Xcode Wildcard all bundle id";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -459,13 +460,14 @@
 			baseConfigurationReference = 9278D6F163D74917A2367404 /* Pods-HLYBluetoothPrintDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CY4833TA98;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = HLYBluetoothPrintDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yiyuan.HLYBluetoothPrintDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
