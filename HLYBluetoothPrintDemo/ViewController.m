@@ -14,7 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, strong) NSArray<HLYBluetoothDevice *> *bluetoothDevices;
-@property (nonatomic, strong) HLYBluetoothPrinter *bluetoothPrinter;
+@property (nonatomic, strong) HLYBluetoothManager *bluetoothManager;
 
 @end
 
@@ -23,14 +23,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.bluetoothPrinter = [HLYBluetoothPrinter printer];
+    self.bluetoothManager = [HLYBluetoothManager manager];
     [self scanPrinters];
 }
 
 - (IBAction)printButtonClicked:(UIButton *)sender {
 
     __weak typeof(self) wSelf = self;
-    [self.bluetoothPrinter sendData:[self createPrinterTestData] completionHandler:^(NSError *error) {
+    [self.bluetoothManager writeValue:[self createPrinterTestData] completionHandler:^(NSError *error) {
         
         __strong typeof(wSelf) self = wSelf;
         [self showAlertWithTitle:sender.titleLabel.text message:error ? [NSString stringWithFormat:@"打印失败: %@", error] : @"打印完成"];
@@ -78,11 +78,11 @@
 - (void)scanPrinters {
     
     __weak typeof(self) wSelf = self;
-    [self.bluetoothPrinter setAutoConnectionCompletionHandler:^(NSError *error) {
-        __strong typeof(wSelf) self = wSelf;
-        [self.tableView reloadData];
-    }];
-    [self.bluetoothPrinter scanWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSError *error) {
+//    [self.bluetoothManager autoConnectPeripheralWithServiceID:(NSString *) characteristicID:<#(NSString *)#> completionHandler:<#^(NSError *)completionHandler#>
+//        __strong typeof(wSelf) self = wSelf;
+//        [self.tableView reloadData];
+//    }];
+    [self.bluetoothManager scanPeripheralsWithCompletionHandler:^(NSArray<HLYBluetoothDevice *> *devices, NSError *error) {
         
         __strong typeof(wSelf) self = wSelf;
         if (error) {
@@ -124,7 +124,7 @@
     HLYBluetoothDevice *device = self.bluetoothDevices[indexPath.row];
 
     __weak typeof(self) wSelf = self;
-    [self.bluetoothPrinter connectWithDevice:device completionHandler:^(NSError *error) {
+    [self.bluetoothManager connectPeripheral:device.peripheral serviceID:device.serviceID characteristicID:device.characteristicID completionHandler:^(NSError *error) {
         __strong typeof(wSelf) self = wSelf;
         
         [self.tableView  reloadData];
